@@ -1,0 +1,41 @@
+generated: '2026-07-19'
+method: searched
+source: openapi/leeo-insurance-services-fleet-openapi.yml
+docs: https://docs.leeoinsurance.com/leeo-apis/
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+  oauth2_flows: []
+  model: >-
+    A single fleet-scoped API key. There is no OAuth, no OIDC, no scope surface, and no per-user
+    identity — the key identifies the fleet and grants read access to that fleet's telematics data.
+schemes:
+- name: apiKeyAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  value_format: "APIKEY <fm_api_key>"
+  description: >-
+    Fleet-scoped API key issued from the LEEO dashboard Settings page, sent in the Authorization
+    header prefixed with the literal `APIKEY `.
+  key_source: LEEO dashboard, Settings page
+  scope: fleet
+  rotation_documented: false
+  expiry_documented: false
+  sources:
+  - openapi/leeo-insurance-services-fleet-openapi.yml
+  docs: https://docs.leeoinsurance.com/leeo-apis/
+required_headers:
+- name: Authorization
+  value: "APIKEY <fm_api_key>"
+- name: Content-Type
+  value: application/json
+notes: >-
+  The SDK side of the LEEO platform authenticates separately — mobile SDKs are initialized with
+  their own SDK key and a caller-supplied driver id, documented in the per-platform integration
+  guides rather than in the API reference.
+scopes:
+  supported: false
+  reason: API key authentication with no scope or permission surface.
