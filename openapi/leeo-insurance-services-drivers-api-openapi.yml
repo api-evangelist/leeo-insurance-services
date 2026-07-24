@@ -1,0 +1,165 @@
+openapi: 3.1.0
+info:
+  title: LEEO Fleet Telematics Aggregates Drivers API
+  version: v1
+  summary: Driver, trip, and driving-behavior telematics data for commercial auto fleets insured by LEEO.
+  description: 'The LEEO APIs expose the telematics data LEEO (formerly Fairmatic) collects for a fleet: the roster of drivers, the trips each driver has taken, detailed trip paths and driving events (phone use, hard braking, rapid acceleration, overspeeding), and daily/weekly aggregate driver scorecards. A report endpoint returns a presigned link to a generated CSV report. All requests are authenticated with a fleet-scoped API key issued from the LEEO dashboard Settings page and presented in the Authorization header as `APIKEY <fm_api_key>`. All dates and epoch timestamps are UTC. Trip data becomes available approximately four hours after a trip completes.'
+  x-generated: '2026-07-19'
+  x-method: generated
+  x-source: https://docs.leeoinsurance.com/leeo-apis/
+  contact:
+    name: LEEO Sales
+    email: sales@leeoinsurance.com
+    url: https://leeoinsurance.com/contact
+  termsOfService: https://leeoinsurance.com/terms-of-service
+servers:
+- url: https://api.leeoinsurance.com/api/v1
+  description: Production
+security:
+- apiKeyAuth: []
+tags:
+- name: Drivers
+  description: Fleet driver roster.
+paths:
+  /drivers:
+    get:
+      operationId: listDrivers
+      tags:
+      - Drivers
+      summary: List all drivers
+      description: Retrieves a paginated list of drivers, irrespective of driver status, within a fleet. All dates are UTC. All fields other than `driver_id` can be null.
+      parameters:
+      - name: limit
+        in: query
+        description: Records per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+        example: 30
+      - name: page
+        in: query
+        description: Page number.
+        required: false
+        schema:
+          type: integer
+        example: 2
+      responses:
+        '200':
+          description: Paginated list of drivers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriverList'
+              example:
+                count: 50
+                limit: 50
+                current_page: 1
+                next_page: null
+                drivers:
+                - driver_id: 33d3a4ed7b8046239c22a35942a08e6f
+                  first_name: John
+                  last_name: Doe
+                  email: null
+                  alias: John Doe
+                  first_travel_date: '2024-05-23'
+                  last_travel_date: '2024-05-23'
+                - driver_id: b527f36ef860aad3616296a1e62fceef
+                  first_name: null
+                  last_name: null
+                  email: null
+                  alias: null
+                  first_travel_date: null
+                  last_travel_date: null
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  responses:
+    RateLimited:
+      description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
+  schemas:
+    DriverList:
+      allOf:
+      - $ref: '#/components/schemas/Pagination'
+      - type: object
+        properties:
+          drivers:
+            type: array
+            items:
+              $ref: '#/components/schemas/Driver'
+    Message:
+      type: object
+      description: Simple message envelope used for non-2xx responses.
+      properties:
+        message:
+          type: string
+    Pagination:
+      type: object
+      description: Pagination envelope fields returned by list operations.
+      properties:
+        count:
+          type: integer
+          description: Total count of results.
+        limit:
+          type: integer
+          description: Records per page.
+        current_page:
+          type: integer
+          description: Current page number.
+        next_page:
+          type:
+          - integer
+          - 'null'
+          description: Next page number; null on the last page.
+    Driver:
+      type: object
+      description: A driver in the fleet. All fields other than driver_id can be null.
+      properties:
+        driver_id:
+          type: string
+        first_name:
+          type:
+          - string
+          - 'null'
+        last_name:
+          type:
+          - string
+          - 'null'
+        email:
+          type:
+          - string
+          - 'null'
+        alias:
+          type:
+          - string
+          - 'null'
+        first_travel_date:
+          type:
+          - string
+          - 'null'
+          format: date
+        last_travel_date:
+          type:
+          - string
+          - 'null'
+          format: date
+      required:
+      - driver_id
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Fleet-scoped API key from the LEEO dashboard Settings page, sent as `Authorization: APIKEY <fm_api_key>`.'

@@ -1,0 +1,371 @@
+openapi: 3.1.0
+info:
+  title: LEEO Fleet Telematics Aggregates Trips API
+  version: v1
+  summary: Driver, trip, and driving-behavior telematics data for commercial auto fleets insured by LEEO.
+  description: 'The LEEO APIs expose the telematics data LEEO (formerly Fairmatic) collects for a fleet: the roster of drivers, the trips each driver has taken, detailed trip paths and driving events (phone use, hard braking, rapid acceleration, overspeeding), and daily/weekly aggregate driver scorecards. A report endpoint returns a presigned link to a generated CSV report. All requests are authenticated with a fleet-scoped API key issued from the LEEO dashboard Settings page and presented in the Authorization header as `APIKEY <fm_api_key>`. All dates and epoch timestamps are UTC. Trip data becomes available approximately four hours after a trip completes.'
+  x-generated: '2026-07-19'
+  x-method: generated
+  x-source: https://docs.leeoinsurance.com/leeo-apis/
+  contact:
+    name: LEEO Sales
+    email: sales@leeoinsurance.com
+    url: https://leeoinsurance.com/contact
+  termsOfService: https://leeoinsurance.com/terms-of-service
+servers:
+- url: https://api.leeoinsurance.com/api/v1
+  description: Production
+security:
+- apiKeyAuth: []
+tags:
+- name: Trips
+  description: Trip lists, trip detail, paths, and driving events.
+paths:
+  /driver/{driver_id}/trips:
+    get:
+      operationId: listDriverTrips
+      tags:
+      - Trips
+      summary: Get driver trips
+      description: Retrieves a paginated list of trips taken by a specified driver from a given start date. Trip data here does not contain the path taken or event details — use the trip detail operations for those. Trips are available approximately four hours after trip completion. `start_date` must fall within the last six months.
+      parameters:
+      - name: driver_id
+        in: path
+        required: true
+        description: Driver identifier. For app integrations, fetch it from the driver list operation; for SDK integrations it is the id supplied at SDK initiation.
+        schema:
+          type: string
+        example: fe497c39d28b4c50828389730e2292fd
+      - name: start_date
+        in: query
+        required: true
+        description: Date to fetch trips from (YYYY-MM-DD). Must be within the last 6 months.
+        schema:
+          type: string
+          format: date
+        example: '2024-05-01'
+      - name: limit
+        in: query
+        description: Records per page (max 100).
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+        example: 30
+      - name: page
+        in: query
+        description: Page number.
+        required: false
+        schema:
+          type: integer
+        example: 2
+      responses:
+        '200':
+          description: Paginated list of trips for the driver.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripList'
+              example:
+                count: 50
+                current_page: 2
+                next_page: null
+                limit: 30
+                trips:
+                - trip_id: 96a4f7c842f74bfab0962feeae52a21b
+                  driver_id: fe497c39d28b4c50828389730e2292fd
+                  trip_start_time: 1716432408087
+                  trip_end_time: 1716432708087
+                  duration_seconds: 2259.833
+                  distance_miles: 52.11779602592761
+                  insurance_period: null
+                  start_latitude: 38.04636977126205
+                  start_longitude: -121.39782655062564
+                  end_latitude: 37.76203001834099
+                  end_longitude: -121.4533660947544
+                  night_driving_seconds: 0.0
+                  highway_miles: 39.90748363242293
+                  night_driving_miles: 0.0
+                  event_summary:
+                    phone_use_count: 6
+                    rapid_acceleration_count: 3
+                    hard_brake_count: 1
+                    overspeeding_count: 0
+                    phone_use_time_seconds: 491.99
+                    overspeeding_time_seconds: 0.0
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /trip/trip_id/{trip_id}:
+    get:
+      operationId: getTripByTripId
+      tags:
+      - Trips
+      summary: Get trip detail by trip id
+      description: Comprehensive information about a specific trip, including its trail path and driving events, addressed by the LEEO-generated `trip_id` (available from the trip list operation). Paginated with a fixed limit of 5 records per page.
+      parameters:
+      - name: trip_id
+        in: path
+        required: true
+        description: LEEO-generated trip identifier.
+        schema:
+          type: string
+        example: 96a4f7c842f74bfab0962feeae52a21b
+      - name: page
+        in: query
+        required: false
+        description: Page number (5 records per page).
+        schema:
+          type: integer
+        example: 1
+      responses:
+        '200':
+          description: Trip detail including trail path and events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripDetailList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /trip/tracking_id/{tracking_id}:
+    get:
+      operationId: getTripByTrackingId
+      tags:
+      - Trips
+      summary: Get trip detail by tracking id
+      description: Comprehensive information about a specific trip, including its trail path and driving events, addressed by the `tracking_id` set by the caller when the trip was started via the LEEO SDK. Paginated with a fixed limit of 5 records per page.
+      parameters:
+      - name: tracking_id
+        in: path
+        required: true
+        description: Caller-supplied tracking identifier set when the trip was started via the SDK.
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        description: Page number (5 records per page).
+        schema:
+          type: integer
+        example: 1
+      responses:
+        '200':
+          description: Trip detail including trail path and events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripDetailList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  responses:
+    RateLimited:
+      description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
+  schemas:
+    TripList:
+      allOf:
+      - $ref: '#/components/schemas/Pagination'
+      - type: object
+        properties:
+          trips:
+            type: array
+            items:
+              $ref: '#/components/schemas/Trip'
+    TrailPoint:
+      type: object
+      description: A single point on the trip trail path.
+      properties:
+        timestamp:
+          type: integer
+          description: Epoch milliseconds, UTC.
+        latitude:
+          type: number
+        longitude:
+          type: number
+        course:
+          type: number
+          description: Heading in degrees relative to North.
+    TripDetailList:
+      allOf:
+      - $ref: '#/components/schemas/Pagination'
+      - type: object
+        properties:
+          trips:
+            type: array
+            items:
+              $ref: '#/components/schemas/TripDetail'
+    TripDetail:
+      allOf:
+      - $ref: '#/components/schemas/Trip'
+      - type: object
+        properties:
+          focus_area:
+            $ref: '#/components/schemas/FocusArea'
+          trail_path:
+            type: array
+            items:
+              $ref: '#/components/schemas/TrailPoint'
+          events:
+            type: array
+            items:
+              $ref: '#/components/schemas/DrivingEvent'
+    Message:
+      type: object
+      description: Simple message envelope used for non-2xx responses.
+      properties:
+        message:
+          type: string
+    FocusArea:
+      type: object
+      description: Flags marking which behaviors are the driver's coaching focus areas.
+      properties:
+        is_phone_use:
+          type: boolean
+        is_rapid_acceleration:
+          type: boolean
+        is_acceleration:
+          type: boolean
+        is_hard_brake:
+          type: boolean
+        is_overspeeding:
+          type: boolean
+    Pagination:
+      type: object
+      description: Pagination envelope fields returned by list operations.
+      properties:
+        count:
+          type: integer
+          description: Total count of results.
+        limit:
+          type: integer
+          description: Records per page.
+        current_page:
+          type: integer
+          description: Current page number.
+        next_page:
+          type:
+          - integer
+          - 'null'
+          description: Next page number; null on the last page.
+    EventSummary:
+      type: object
+      description: Counts and durations of driving events observed on a trip or aggregate window.
+      properties:
+        phone_use_count:
+          type: integer
+        rapid_acceleration_count:
+          type: integer
+        hard_brake_count:
+          type: integer
+        overspeeding_count:
+          type: integer
+        phone_use_time_seconds:
+          type: number
+        overspeeding_time_seconds:
+          type: number
+    Trip:
+      type: object
+      description: Trip summary without path or event detail.
+      properties:
+        trip_id:
+          type: string
+        driver_id:
+          type: string
+        trip_start_time:
+          type: integer
+          description: Epoch milliseconds, UTC.
+        trip_end_time:
+          type: integer
+          description: Epoch milliseconds, UTC.
+        duration_seconds:
+          type: number
+        distance_miles:
+          type: number
+        insurance_period:
+          type:
+          - integer
+          - 'null'
+          description: Insurance period 1, 2 or 3; null for fleets that do not require insurance periods.
+          enum:
+          - 1
+          - 2
+          - 3
+          - null
+        start_latitude:
+          type: number
+        start_longitude:
+          type: number
+        end_latitude:
+          type: number
+        end_longitude:
+          type: number
+        night_driving_seconds:
+          type: number
+        highway_miles:
+          type: number
+        night_driving_miles:
+          type: number
+        event_summary:
+          $ref: '#/components/schemas/EventSummary'
+    DrivingEvent:
+      type: object
+      description: A driving event detected during the trip.
+      properties:
+        event_type:
+          type: integer
+          description: Numeric event type — 1 RAPID_ACCELERATION, 2 HARD_BRAKE, 7 PHONE_USE, 9 OVERSPEEDING.
+          enum:
+          - 1
+          - 2
+          - 7
+          - 9
+        event_name:
+          type: string
+          enum:
+          - RAPID_ACCELERATION
+          - HARD_BRAKE
+          - PHONE_USE
+          - OVERSPEEDING
+        event_start_timestamp:
+          type: integer
+        event_end_timestamp:
+          type: integer
+        event_start_latitude:
+          type: number
+        event_start_longitude:
+          type: number
+        event_end_latitude:
+          type: number
+        event_end_longitude:
+          type: number
+        event_data:
+          type: object
+          description: Additional event data. Empty for PHONE_USE, HARD_BRAKE and RAPID_ACCELERATION. OVERSPEEDING includes user_speed_mph, speed_limit_mph and max_user_speed_mph.
+          properties:
+            user_speed_mph:
+              type: number
+            speed_limit_mph:
+              type: number
+            max_user_speed_mph:
+              type: number
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: 'Fleet-scoped API key from the LEEO dashboard Settings page, sent as `Authorization: APIKEY <fm_api_key>`.'
