@@ -1,0 +1,29 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/leeo-insurance-services-fleet-openapi.yml
+notes: >-
+  Agent Skills generated from the documented LEEO Fleet Telematics API. Every operationId
+  referenced is verified against openapi/leeo-insurance-services-fleet-openapi.yml. LEEO publishes
+  no AGENTS.md or first-party agent skills.
+skills:
+  - file: leeo-insurance-services-driver-safety-review.md
+    name: LEEO driver safety review
+    description: >-
+      Pull the fleet driver roster and produce a safety review from daily and weekly aggregate
+      scorecards, ranking drivers and surfacing coaching focus areas.
+    api: openapi/leeo-insurance-services-fleet-openapi.yml
+    operations: [listDrivers, getDailyDriverAggregate, getWeeklyDriverAggregate]
+  - file: leeo-insurance-services-trip-investigation.md
+    name: LEEO trip investigation
+    description: >-
+      Locate a specific trip from a driver's history and pull its full trail path and driving
+      events to reconstruct what happened, for claims triage or incident review.
+    api: openapi/leeo-insurance-services-fleet-openapi.yml
+    operations: [listDrivers, listDriverTrips, getTripByTripId, getTripByTrackingId]
+  - file: leeo-insurance-services-fleet-reporting.md
+    name: LEEO fleet reporting export
+    description: >-
+      Retrieve the generated fleet report link for a report time, handle the not-ready case, and
+      fall back to assembling an equivalent export from the driver and aggregate operations.
+    api: openapi/leeo-insurance-services-fleet-openapi.yml
+    operations: [getReportLink, listDrivers, getWeeklyDriverAggregate]

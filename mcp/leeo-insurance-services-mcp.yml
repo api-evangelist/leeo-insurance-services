@@ -1,0 +1,53 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/leeo-insurance-services-fleet-openapi.yml
+notes: >-
+  LEEO publishes no hosted or remote MCP server. This is a candidate tool surface derived
+  one-to-one from the documented REST operations, for use in generating an MCP server against the
+  LEEO Fleet Telematics API. Every tool is read-only. Auth is a single fleet-scoped API key sent
+  as `Authorization: APIKEY <fm_api_key>`.
+server:
+  name: leeo-insurance-services
+  transport: stdio
+  url: null
+  base_url: https://api.leeoinsurance.com/api/v1
+  auth:
+    type: apiKey
+    in: header
+    name: Authorization
+    format: "APIKEY <fm_api_key>"
+tools:
+  - name: list_drivers
+    description: List all drivers in the fleet, paginated, irrespective of driver status.
+    read_only: true
+    source_operation: openapi/leeo-insurance-services-fleet-openapi.yml#listDrivers
+  - name: list_driver_trips
+    description: >-
+      List trips taken by a driver from a given start date, paginated. Excludes trail path and
+      event detail.
+    read_only: true
+    source_operation: openapi/leeo-insurance-services-fleet-openapi.yml#listDriverTrips
+  - name: get_trip_by_trip_id
+    description: Get full trip detail, including trail path and driving events, by LEEO trip id.
+    read_only: true
+    source_operation: openapi/leeo-insurance-services-fleet-openapi.yml#getTripByTripId
+  - name: get_trip_by_tracking_id
+    description: Get full trip detail, including trail path and driving events, by SDK tracking id.
+    read_only: true
+    source_operation: openapi/leeo-insurance-services-fleet-openapi.yml#getTripByTrackingId
+  - name: get_daily_driver_aggregate
+    description: >-
+      Get aggregated daily driving metrics and safety score for up to 20 drivers on a given date.
+    read_only: true
+    source_operation: openapi/leeo-insurance-services-fleet-openapi.yml#getDailyDriverAggregate
+  - name: get_weekly_driver_aggregate
+    description: >-
+      Get aggregated weekly driving metrics and safety score, with daily breakdown, for up to 20
+      drivers for a week beginning on a Monday.
+    read_only: true
+    source_operation: openapi/leeo-insurance-services-fleet-openapi.yml#getWeeklyDriverAggregate
+  - name: get_report_link
+    description: Get a presigned URL to the generated fleet report for a given report time.
+    read_only: true
+    source_operation: openapi/leeo-insurance-services-fleet-openapi.yml#getReportLink

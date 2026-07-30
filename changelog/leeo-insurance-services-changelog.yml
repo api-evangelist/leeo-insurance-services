@@ -1,0 +1,43 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.leeoinsurance.com/sitemap.xml
+docs: https://docs.leeoinsurance.com/category/android-sdk-release-notes
+scope: sdk
+scheme: semver
+notes: >-
+  LEEO publishes dated release notes per mobile SDK, but no changelog for the REST Fleet
+  Telematics API (which remains at v1). The release-note pages are client-side routed in the
+  Docusaurus site and their bodies could not be retrieved server-side, so only the version
+  inventory enumerated from the published sitemap is recorded here — no dates or highlights are
+  asserted. Version numbers are corroborated against the public package registries.
+release_notes:
+  android: https://docs.leeoinsurance.com/category/android-sdk-release-notes
+  ios: https://docs.leeoinsurance.com/category/ios-sdk-release-notes
+  react_native: https://docs.leeoinsurance.com/category/react-native-sdk-release-notes
+current_versions:
+  android_sdk: 3.1.1
+  ios_sdk: 3.1.0
+  react_native_sdk: 3.1.1
+  maui_android_sdk: 3.1.1
+  maui_ios_sdk: 3.1.0
+  leeo_branded_sdk: 0.1.1
+  rest_api: v1
+entries:
+  - component: android-sdk
+    versions: ['3.1.1', '3.1.0', '3.0.3', '3.0.2', '3.0.1', '3.0.0', '2.1.0', '2.0.0']
+    source: https://docs.leeoinsurance.com/category/android-sdk-release-notes
+  - component: ios-sdk
+    versions: ['3.1.0', '3.0.1', '3.0.0', '2.1.0', '2.0.3', '2.0.1', '2.0.0']
+    source: https://docs.leeoinsurance.com/category/ios-sdk-release-notes
+  - component: react-native-sdk
+    versions: ['3.1.1']
+    source: https://docs.leeoinsurance.com/category/react-native-sdk-release-notes
+breaking_changes:
+  - version: '3.0.0'
+    component: android-sdk
+    note: Major version with a published migration guide from older versions.
+    url: https://docs.leeoinsurance.com/integrate-android/migrating-from-older-versions-to-3.0.0
+  - version: '3.0.0'
+    component: ios-sdk
+    note: Major version with a published migration guide from older versions.
+    url: https://docs.leeoinsurance.com/integrate-ios/migrating-from-older-versions-to-3.0.0

@@ -1,0 +1,20 @@
+{
+  "provider": "leeo-insurance-services",
+  "sources": [
+    "leeo-insurance-services-aggregates-api-openapi.yml",
+    "leeo-insurance-services-drivers-api-openapi.yml",
+    "leeo-insurance-services-reports-api-openapi.yml",
+    "leeo-insurance-services-trips-api-openapi.yml"
+  ],
+  "outputs": [
+    "leeo-insurance-services-aggregates-api-openapi.yml",
+    "leeo-insurance-services-drivers-api-openapi.yml",
+    "leeo-insurance-services-reports-api-openapi.yml",
+    "leeo-insurance-services-trips-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

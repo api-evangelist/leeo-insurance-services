@@ -1,0 +1,35 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/leeo-insurance-services-fleet-openapi.yml
+docs: https://docs.leeoinsurance.com/leeo-apis/
+format: custom
+envelope: '{"message": "<string>"}'
+notes: >-
+  LEEO does not publish a dedicated error reference and does not use RFC 9457
+  application/problem+json. The only error body shape published in the docs is a flat
+  `message` string, shown on the report endpoint's 404. The 401 and 429 entries below are
+  derived from the documented authentication requirement and the documented 5000 req/min
+  per-fleet rate limit; LEEO does not publish their exact response bodies.
+problems:
+  - status: 404
+    title: Report not ready yet
+    detail: The requested report has not finished generating for the supplied report_time.
+    message: Report not ready yet
+    remediation: Retry after the report generation window has elapsed.
+    source_operation: openapi/leeo-insurance-services-fleet-openapi.yml#getReportLink
+    evidence: published in docs
+  - status: 401
+    title: Unauthorized
+    detail: Missing or invalid API key in the Authorization header.
+    remediation: >-
+      Send `Authorization: APIKEY <fm_api_key>` using the key from the LEEO dashboard Settings page.
+    source_operation: openapi/leeo-insurance-services-fleet-openapi.yml
+    evidence: derived from documented authentication requirement
+  - status: 429
+    title: Rate limit exceeded
+    detail: >-
+      More than 5000 requests were made in one minute for the fleet. All authenticated calls count,
+      including non-200 responses.
+    remediation: Back off and retry; spread calls across the minute window.
+    source_operation: openapi/leeo-insurance-services-fleet-openapi.yml
+    evidence: derived from documented rate limit

@@ -1,0 +1,90 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for LEEO Fleet Telematics API
+  version: 1.0.0
+extends: openapi/leeo-insurance-services-fleet-openapi.yml
+x-generated: '2026-07-19'
+x-method: generated
+x-source: https://docs.leeoinsurance.com/leeo-apis/
+actions:
+  - target: $.info
+    description: Record provenance and the LEEO/Fairmatic rebrand on the spec itself.
+    update:
+      x-apievangelist-source: https://docs.leeoinsurance.com/leeo-apis/
+      x-apievangelist-method: generated
+      x-former-brand: Fairmatic
+      x-rebrand-date: '2025-12-15'
+  - target: $.info
+    description: Attach the documented fleet-level rate limit as a machine-readable extension.
+    update:
+      x-rate-limit:
+        limit: 5000
+        window: 1m
+        scope: fleet
+        counts_non_2xx: true
+        docs: https://docs.leeoinsurance.com/leeo-apis/
+  - target: $.info
+    description: Attach data-freshness and lookback semantics that apply across all operations.
+    update:
+      x-data-semantics:
+        timezone: UTC
+        trip_availability_delay: PT4H
+        lookback_window: P6M
+  - target: $.paths['/drivers'].get
+    description: Mark the driver list as the entry point for discovering driver ids.
+    update:
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+        token-ttl: 3600
+      x-entry-point: true
+  - target: $.paths['/driver/{driver_id}/trips'].get
+    update:
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+        token-ttl: 3600
+  - target: $.paths['/trip/trip_id/{trip_id}'].get
+    update:
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+        token-ttl: 3600
+  - target: $.paths['/trip/tracking_id/{tracking_id}'].get
+    update:
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+        token-ttl: 3600
+  - target: $.paths['/driver-aggregate/daily'].get
+    update:
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+        token-ttl: 3600
+  - target: $.paths['/driver-aggregate/weekly'].get
+    update:
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+        token-ttl: 3600
+  - target: $.paths['/report'].get
+    description: >-
+      The report link resolves to a presigned URL to a file containing fleet-wide driver data —
+      flag it as carrying elevated data sensitivity relative to the other read operations.
+    update:
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+        token-ttl: 3600
+      x-returns-presigned-url: true
+      x-data-sensitivity: elevated
+  - target: $.components.schemas.Trip.properties.insurance_period
+    description: Bind the insurance period enum to its CPUC regulatory definition.
+    update:
+      x-regulatory-basis: California Public Utilities Commission insurance risk periods
+      x-period-definitions:
+        '1': Driver logged in and available for ride requests, not yet matched.
+        '2': Driver has accepted a match but the vehicle is not yet occupied.
+        '3': Pick-up complete and the vehicle is occupied.
+        'null': Fleet does not require insurance periods.

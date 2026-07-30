@@ -1,0 +1,114 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/leeo-insurance-services-fleet-openapi.yml
+docs: https://docs.leeoinsurance.com/leeo-apis/
+summary: >-
+  The LEEO telematics data model is a small, fleet-scoped graph. A Fleet (implicit — it is the
+  scope of the API key, never an addressable resource) contains Drivers. Each Driver takes Trips.
+  Each Trip carries a TrailPath of points and a list of DrivingEvents, plus a rolled-up
+  EventSummary. Daily and Weekly DrivingSummary records aggregate a driver's trips over a window,
+  with the weekly record embedding its daily breakdown.
+entities:
+  - name: Fleet
+    addressable: false
+    note: Implicit scope of the API key; also the unit of rate limiting (5000 req/min per fleet).
+  - name: Driver
+    id_field: driver_id
+    id_format: 32-character lowercase hex
+    source_operation: listDrivers
+    note: >-
+      For SDK integrations the driver_id is the identifier supplied at SDK initiation; for app
+      integrations it comes from the driver list operation. All fields except driver_id may be null.
+  - name: Trip
+    id_field: trip_id
+    id_format: 32-character lowercase hex
+    alternate_id: tracking_id
+    alternate_id_note: Caller-supplied, set when the trip is started via the SDK.
+    source_operation: listDriverTrips
+  - name: TrailPoint
+    id_field: null
+    note: Ordered point on a trip's route — timestamp, latitude, longitude, course (degrees from North).
+  - name: DrivingEvent
+    id_field: null
+    note: >-
+      Detected driving behavior. event_type 1 RAPID_ACCELERATION, 2 HARD_BRAKE, 7 PHONE_USE,
+      9 OVERSPEEDING. Only OVERSPEEDING carries event_data.
+  - name: EventSummary
+    id_field: null
+    note: Counts and durations of events, embedded in trips and aggregate summaries.
+  - name: FocusArea
+    id_field: null
+    note: Boolean flags marking which behaviors are the driver's coaching focus.
+  - name: DailyDrivingSummary
+    id_field: null
+    source_operation: getDailyDriverAggregate
+    note: Keyed by driver_id + date. Carries fm_score and fm_grade.
+  - name: WeeklyDrivingSummary
+    id_field: null
+    source_operation: getWeeklyDriverAggregate
+    note: Keyed by driver_id + start_date (a Monday) + end_date.
+  - name: Report
+    id_field: null
+    source_operation: getReportLink
+    note: Keyed by report_time; resolves to a presigned URL rather than a resource body.
+relationships:
+  - from: Fleet
+    to: Driver
+    type: has_many
+    via: api key scope
+  - from: Driver
+    to: Trip
+    type: has_many
+    via: driver_id
+  - from: Trip
+    to: Driver
+    type: belongs_to
+    via: driver_id
+  - from: Trip
+    to: TrailPoint
+    type: has_many
+    via: trail_path
+  - from: Trip
+    to: DrivingEvent
+    type: has_many
+    via: events
+  - from: Trip
+    to: EventSummary
+    type: has_one
+    via: event_summary
+  - from: Trip
+    to: FocusArea
+    type: has_one
+    via: focus_area
+  - from: Driver
+    to: DailyDrivingSummary
+    type: has_many
+    via: driver_id
+  - from: Driver
+    to: WeeklyDrivingSummary
+    type: has_many
+    via: driver_id
+  - from: WeeklyDrivingSummary
+    to: DailyDrivingSummary
+    type: has_many
+    via: daily_summary_breakdown
+  - from: DailyDrivingSummary
+    to: EventSummary
+    type: has_one
+    via: events_summary
+  - from: DailyDrivingSummary
+    to: FocusArea
+    type: has_one
+    via: focus_area
+enumerations:
+  insurance_period:
+    values: [1, 2, 3, null]
+    description: >-
+      CPUC insurance risk periods. 1 = driver logged in and available, not matched. 2 = match
+      accepted, vehicle not yet occupied. 3 = pick-up complete, vehicle occupied. null = fleet
+      does not require insurance periods.
+  event_type:
+    1: RAPID_ACCELERATION
+    2: HARD_BRAKE
+    7: PHONE_USE
+    9: OVERSPEEDING

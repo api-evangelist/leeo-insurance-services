@@ -1,0 +1,86 @@
+# LEEO Insurance Services
+
+> LEEO (formerly Fairmatic, rebranded December 2025) is a San Francisco-based managing general agent
+> for commercial auto insurance. It underwrites and prices fleet policies using telematics collected
+> from drivers' phones through the LEEO mobile SDK, and rewards safer driving with renewal credits
+> and cashback. LEEO exposes a read-only REST Fleet Telematics API that returns the fleet's driver
+> roster, trip histories, trip paths and driving events, and daily/weekly driver safety scorecards.
+> LEEO is backed by Battery Ventures, Foundation Capital, and Aquiline Technology Growth.
+
+Generated: 2026-07-19. Method: generated from the API Evangelist catalog entry and this repository's
+artifacts. Source of record: https://docs.leeoinsurance.com/
+
+## APIs
+
+- [LEEO Fleet Telematics API](https://docs.leeoinsurance.com/leeo-apis/): Read-only REST API over
+  fleet drivers, trips, driving events, and aggregate driver safety scores. Base URL
+  `https://api.leeoinsurance.com/api/v1`. Authenticated with a fleet-scoped API key sent as
+  `Authorization: APIKEY <fm_api_key>`. Rate limited to 5000 requests per minute per fleet.
+
+### Operations
+
+- `GET /drivers` — list all drivers in the fleet (paginated, max 100 per page)
+- `GET /driver/{driver_id}/trips` — list a driver's trips from a start date (paginated, max 100)
+- `GET /trip/trip_id/{trip_id}` — trip detail with trail path and events (5 per page)
+- `GET /trip/tracking_id/{tracking_id}` — trip detail by SDK-supplied tracking id (5 per page)
+- `GET /driver-aggregate/daily` — daily driver scorecards for 1–20 drivers
+- `GET /driver-aggregate/weekly` — weekly driver scorecards with daily breakdown for 1–20 drivers
+- `GET /report` — presigned URL to a generated fleet report
+
+## Specs
+
+- [OpenAPI 3.1 — Fleet Telematics API](openapi/leeo-insurance-services-fleet-openapi.yml)
+- [OpenAPI Overlay — API Evangelist enhancements](overlays/leeo-insurance-services-fleet-overlay.yaml)
+
+## Artifacts
+
+- [Authentication profile](authentication/leeo-insurance-services-authentication.yml)
+- [API conventions](conventions/leeo-insurance-services-conventions.yml)
+- [Error catalog](errors/leeo-insurance-services-problem-types.yml)
+- [Lifecycle and versioning](lifecycle/leeo-insurance-services-lifecycle.yml)
+- [Changelog](changelog/leeo-insurance-services-changelog.yml)
+- [Conformance](conformance/leeo-insurance-services-conformance.yml)
+- [Data model](data-model/leeo-insurance-services-data-model.yml)
+- [Packages and SDKs](packages/leeo-insurance-services-packages.yml)
+- [Candidate MCP tool surface](mcp/leeo-insurance-services-mcp.yml)
+- [Domain security probe](security/leeo-insurance-services-domain-security.yml)
+- [Agent skills](skills/_index.yml)
+
+## Docs
+
+- [Developer documentation](https://docs.leeoinsurance.com/): SDK integration and API reference
+- [Leeo APIs overview](https://docs.leeoinsurance.com/leeo-apis/): auth, pagination, rate limits
+- [Integrate the Android SDK](https://docs.leeoinsurance.com/integrate-android/integrate)
+- [Integrate the iOS SDK](https://docs.leeoinsurance.com/integrate-ios/integrate)
+- [Integrate the React Native SDK](https://docs.leeoinsurance.com/integrate-the-leeo-react-native-sdk/integrate)
+- [Integrate the MAUI SDK](https://docs.leeoinsurance.com/category/integrating-the-leeo-maui-sdk-in-android-and-ios-apps)
+- [Validation guide](https://docs.leeoinsurance.com/guide)
+- [Troubleshoot](https://docs.leeoinsurance.com/troubleshoot)
+- [Migration from Zendrive SDK](https://docs.leeoinsurance.com/category/migration-from-zendrive-sdk)
+
+## Company
+
+- [Website](https://leeoinsurance.com/)
+- [About us](https://leeoinsurance.com/about-us)
+- [Blog](https://leeoinsurance.com/blog)
+- [Contact](https://leeoinsurance.com/contact)
+- [Downloads and appetite guide](https://leeoinsurance.com/downloads)
+- [Privacy policy](https://leeoinsurance.com/privacy-policy)
+- [Terms of use](https://leeoinsurance.com/terms-of-service)
+- [Fleet dashboard login](https://app.fairmatic.com/login/)
+- [GitHub organization](https://github.com/fairmatic)
+
+## Key concepts
+
+- **Insurance risk periods** — LEEO tracks the three periods defined by the California Public
+  Utilities Commission. Period 1: driver logged in and available, not matched. Period 2: match
+  accepted, vehicle not yet occupied. Period 3: pick-up complete, vehicle occupied. The API returns
+  these as `insurance_period` values 1, 2, 3, or null for fleets that do not require them.
+- **Driving events** — `event_type` 1 RAPID_ACCELERATION, 2 HARD_BRAKE, 7 PHONE_USE,
+  9 OVERSPEEDING. Only OVERSPEEDING carries extra `event_data`
+  (`user_speed_mph`, `speed_limit_mph`, `max_user_speed_mph`).
+- **fm_score / fm_grade** — the LEEO driver safety score and its grade band, returned on daily and
+  weekly aggregates.
+- **Data latency** — trips become queryable roughly 4 hours after they complete. `start_date`
+  parameters must fall within the last 6 months.
+- **Time** — all dates and epoch timestamps are UTC; trip and event times are epoch milliseconds.

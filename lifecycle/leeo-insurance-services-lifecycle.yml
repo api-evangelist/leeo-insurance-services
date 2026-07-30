@@ -1,0 +1,44 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.leeoinsurance.com/
+versioning:
+  scheme: uri-path
+  current: v1
+  base_url: https://api.leeoinsurance.com/api/v1
+  docs: https://docs.leeoinsurance.com/leeo-apis/
+  policy_published: false
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  note: >-
+    LEEO publishes no API deprecation or sunset policy, and no Deprecation/Sunset header support
+    (RFC 8594) is documented. No Deprecation pointer is wired in apis.yml.
+sla:
+  url: null
+  uptime_target: null
+  published: false
+status_page:
+  url: null
+  published: false
+  note: >-
+    No status page was found. The docs page titled "Leeo App Status"
+    (https://docs.leeoinsurance.com/leeo-app-status) is a driver-app troubleshooting guide for
+    dashboard issue states, NOT an API/service status page, so no StatusPage pointer is wired.
+rebrand:
+  from: Fairmatic
+  to: LEEO
+  date: '2025-12-15'
+  note: >-
+    Fairmatic rebranded to LEEO in December 2025. The docs host docs.fairmatic.com still resolves
+    alongside docs.leeoinsurance.com, and SDK packages/release notes still carry Fairmatic naming
+    while a Leeo-branded SDK line has begun publishing.
+sdk_lifecycle:
+  migration_guides:
+    - name: Migration from Zendrive SDK
+      url: https://docs.leeoinsurance.com/category/migration-from-zendrive-sdk
+    - name: Migrating Android from older versions to 3.0.0
+      url: https://docs.leeoinsurance.com/integrate-android/migrating-from-older-versions-to-3.0.0
+    - name: Migrating iOS from older versions to 3.0.0
+      url: https://docs.leeoinsurance.com/integrate-ios/migrating-from-older-versions-to-3.0.0
+deprecated_operations: []

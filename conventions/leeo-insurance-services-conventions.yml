@@ -1,0 +1,76 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.leeoinsurance.com/leeo-apis/
+docs: https://docs.leeoinsurance.com/leeo-apis/
+summary: >-
+  The LEEO Fleet Telematics API is a read-only, fleet-scoped REST API. Every operation is a GET;
+  there are no write operations, and therefore no idempotency contract. Authentication is a
+  fleet-scoped API key in the Authorization header. List operations use page/limit pagination
+  with a count/current_page/next_page envelope. All timestamps are UTC.
+authentication:
+  style: api-key
+  header: Authorization
+  format: "APIKEY <fm_api_key>"
+  scope: fleet
+  key_source: LEEO dashboard Settings page
+  cross_reference: authentication/leeo-insurance-services-authentication.yml
+idempotency:
+  supported: false
+  reason: >-
+    The published API surface is entirely GET (read-only). No idempotency key header is documented
+    and none is required. No Idempotency pointer is wired in apis.yml.
+pagination:
+  style: page-number
+  request_params:
+    - name: limit
+      description: Records per page. Max 100 on the driver list and driver trips operations.
+    - name: page
+      description: Page number.
+  response_fields:
+    - name: count
+      description: Total count of results.
+    - name: limit
+      description: Records per page in effect.
+    - name: current_page
+      description: Current page number.
+    - name: next_page
+      description: Next page number; null on the last page.
+  fixed_page_sizes:
+    - operation: getTripByTripId
+      limit: 5
+    - operation: getTripByTrackingId
+      limit: 5
+field_expansion:
+  supported: false
+  note: >-
+    Detail is split by endpoint rather than by an expand parameter — the trip list omits trail path
+    and events, which are only returned by the trip detail operations.
+metadata:
+  supported: false
+request_tracing:
+  request_id_header: null
+  documented: false
+versioning:
+  style: uri-path
+  current: v1
+  base_url: https://api.leeoinsurance.com/api/v1
+  cross_reference: lifecycle/leeo-insurance-services-lifecycle.yml
+error_envelope:
+  format: custom
+  shape: '{"message": "<string>"}'
+  problem_json: false
+  cross_reference: errors/leeo-insurance-services-problem-types.yml
+rate_limiting:
+  limit: 5000
+  window: 1 minute
+  scope: per fleet
+  counts_non_2xx: true
+  headers_documented: false
+  note: >-
+    All authenticated API calls count toward the limit, including non-200 responses. LEEO does not
+    document rate-limit response headers.
+time_semantics:
+  timezone: UTC
+  timestamp_format: epoch milliseconds for trip and event times; YYYY-MM-DD for dates
+  data_latency: Trips become available approximately 4 hours after trip completion.
+  lookback_window: start_date parameters must fall within the last 6 months.

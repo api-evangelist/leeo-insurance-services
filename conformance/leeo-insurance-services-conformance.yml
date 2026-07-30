@@ -1,0 +1,58 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/leeo-insurance-services-fleet-openapi.yml
+notes: >-
+  Derived from the published API surface and docs. LEEO publishes no certifications, no trust
+  center, and no compliance program page, so no Compliance pointer is wired in apis.yml. The one
+  regulatory standard LEEO explicitly documents is the California Public Utilities Commission
+  definition of rideshare/TNC insurance risk periods, which the SDK and the API's
+  `insurance_period` field implement.
+standards:
+  - id: cpuc-insurance-risk-periods
+    conforms: true
+    evidence: >-
+      Docs define Periods 1/2/3 per the California Public Utilities Commission; the API returns
+      insurance_period with values 1, 2, 3 or null.
+    source: https://docs.leeoinsurance.com/
+  - id: rest
+    conforms: true
+    evidence: Resource-oriented HTTP GET endpoints returning application/json.
+  - id: api-key-auth
+    conforms: true
+    evidence: openapi securityScheme type apiKey in header Authorization
+  - id: pagination
+    conforms: true
+    evidence: page/limit query params with count/current_page/next_page response envelope
+  - id: rate-limiting
+    conforms: true
+    evidence: documented 5000 requests per minute per fleet
+  - id: oauth2
+    conforms: false
+    evidence: no oauth2 securityScheme; API key only
+  - id: oidc
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: 'errors use a flat {"message": ...} envelope, not application/problem+json'
+  - id: json-api
+    conforms: false
+  - id: odata
+    conforms: false
+  - id: idempotency
+    conforms: false
+    evidence: read-only GET surface; no idempotency key documented
+  - id: webhooks
+    conforms: false
+    evidence: no webhook or event surface documented
+  - id: asyncapi
+    conforms: false
+  - id: fhir
+    conforms: false
+  - id: fapi
+    conforms: false
+  - id: scim
+    conforms: false
+  - id: psd2
+    conforms: false
+certifications: []
+compliance_program_published: false

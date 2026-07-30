@@ -1,0 +1,128 @@
+generated: '2026-07-19'
+method: searched
+source: https://docs.leeoinsurance.com/
+notes: >-
+  LEEO was formerly Fairmatic and rebranded in December 2025. First-party client libraries are
+  published under BOTH brands: the mature, widely-versioned Fairmatic SDK line (npm/Maven/NuGet/
+  CocoaPods git podspec/SPM, v3.x) and a newer Leeo-branded line (npm + CocoaPods trunk, v0.1.1).
+  The Leeo-branded packages are confirmed first-party by their CocoaPods trunk owner
+  chaim.wiesner@leeoinsurance.com and the npm `leeoinsurance` maintainer account. These are mobile
+  telematics SDKs (trip tracking, insurance-period marking, incident reporting) — LEEO publishes no
+  server-side client library for the REST Fleet Telematics API.
+packages:
+  - language: javascript
+    registry: npm
+    name: react-native-fairmatic-sdk
+    version: 3.1.1
+    url: https://www.npmjs.com/package/react-native-fairmatic-sdk
+    install: npm install react-native-fairmatic-sdk
+    repository: https://github.com/fairmatic/fairmatic-sdk-react-native
+    docs: https://docs.fairmatic.com/integrate-the-fairmatic-react-native-sdk
+    official: true
+    brand: fairmatic
+  - language: javascript
+    registry: npm
+    name: leeo-react-native-sdk
+    version: 0.1.1
+    url: https://www.npmjs.com/package/leeo-react-native-sdk
+    install: npm install leeo-react-native-sdk
+    official: true
+    brand: leeo
+    note: Published by the npm `leeoinsurance` maintainer account; Leeo-branded successor line.
+  - language: javascript
+    registry: npm
+    name: leeo-ios-sdk
+    version: 0.1.1
+    url: https://www.npmjs.com/package/leeo-ios-sdk
+    install: npm install leeo-ios-sdk
+    repository: https://github.com/leeoinsurance/leeo-ios-sdk
+    official: true
+    brand: leeo
+    note: Repository referenced in package metadata is not yet public.
+  - language: java
+    registry: maven-central
+    name: com.fairmatic:sdk
+    version: 3.0.2
+    url: https://central.sonatype.com/artifact/com.fairmatic/sdk
+    install: "implementation 'com.fairmatic:sdk:3.0.2'"
+    docs: https://docs.leeoinsurance.com/integrate-android/integrate
+    official: true
+    brand: fairmatic
+  - language: csharp
+    registry: nuget
+    name: FairmaticSDK.Android
+    version: 3.1.1
+    url: https://www.nuget.org/packages/FairmaticSDK.Android
+    install: dotnet add package FairmaticSDK.Android
+    docs: https://docs.leeoinsurance.com/integrate-the-leeo-maui-sdk/integrate-the-fairmatic-android-maui-sdk
+    official: true
+    brand: fairmatic
+    note: MAUI Android bindings.
+  - language: csharp
+    registry: nuget
+    name: FairmaticSDK.iOS
+    version: 3.1.0
+    url: https://www.nuget.org/packages/FairmaticSDK.iOS
+    install: dotnet add package FairmaticSDK.iOS
+    docs: https://docs.leeoinsurance.com/integrate-the-leeo-maui-sdk/integrate-the-fairmatic-ios-maui-sdk
+    official: true
+    brand: fairmatic
+    note: MAUI iOS bindings.
+  - language: csharp
+    registry: nuget
+    name: Fairmatic.Android
+    version: 3.0.3
+    url: https://www.nuget.org/packages/Fairmatic.Android
+    install: dotnet add package Fairmatic.Android
+    official: true
+    brand: fairmatic
+    note: Superseded by FairmaticSDK.Android.
+  - language: csharp
+    registry: nuget
+    name: Fairmatic.iOS
+    version: 3.0.3
+    url: https://www.nuget.org/packages/Fairmatic.iOS
+    install: dotnet add package Fairmatic.iOS
+    official: true
+    brand: fairmatic
+    note: Superseded by FairmaticSDK.iOS.
+  - language: swift
+    registry: cocoapods
+    name: LeeoSDK
+    version: 0.1.1
+    url: https://cocoapods.org/pods/LeeoSDK
+    install: "pod 'LeeoSDK'"
+    repository: https://github.com/fairmatic/leeo-cocoapods
+    official: true
+    brand: leeo
+    note: Published to CocoaPods trunk by chaim.wiesner@leeoinsurance.com.
+  - language: swift
+    registry: cocoapods-git
+    name: FairmaticSDK
+    url: https://github.com/fairmatic/fairmatic-cocoapods
+    install: "pod 'FairmaticSDK', :git => 'https://github.com/fairmatic/fairmatic-cocoapods.git'"
+    docs: https://docs.leeoinsurance.com/integrate-ios/integrate
+    official: true
+    brand: fairmatic
+    note: Distributed via a git podspec repository rather than the CocoaPods trunk.
+  - language: swift
+    registry: swift-package-manager
+    name: fairmatic-sdk-spm
+    url: https://github.com/fairmatic/fairmatic-sdk-spm
+    install: "https://github.com/fairmatic/fairmatic-sdk-spm"
+    official: true
+    brand: fairmatic
+    note: Swift Package Manager distribution of the Fairmatic iOS xcframework.
+sample_applications:
+  - name: fmsdk-insurance-sample-android
+    language: kotlin
+    url: https://github.com/fairmatic/fmsdk-insurance-sample-android
+  - name: fmsdk-insurance-sample-ios
+    language: swift
+    url: https://github.com/fairmatic/fmsdk-insurance-sample-ios
+  - name: fmsdk-insurance-sample-maui
+    language: csharp
+    url: https://github.com/fairmatic/fmsdk-insurance-sample-maui
+  - name: FMSDKReactNativeSample
+    language: typescript
+    url: https://github.com/fairmatic/FMSDKReactNativeSample
