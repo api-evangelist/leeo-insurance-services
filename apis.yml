@@ -1,23 +1,167 @@
 aid: leeo-insurance-services
 name: LEEO Insurance Services
-description: LEEO Insurance Services is a company surfaced as a portfolio company of battery-ventures
-  and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the
-  enrichment pipeline.
+description: >-
+  LEEO Insurance Services is a San Francisco-based managing general agent (MGA) for commercial auto
+  insurance, founded in 2017 and known as Fairmatic until its December 2025 rebrand. LEEO
+  underwrites and prices fleet policies using telematics collected from drivers' phones through its
+  mobile SDK, applying machine learning across underwriting, pricing, and claims, and rewarding
+  safer driving with renewal credits and cashback. It writes fleet classes including non-emergency
+  medical transport, light business auto, and last-mile delivery, selling through brokers. LEEO
+  exposes a read-only REST Fleet Telematics API returning the driver roster, trip histories, trip
+  paths and driving events, and daily and weekly driver safety scorecards, plus native SDKs for
+  Android, iOS, React Native, and MAUI. The company has raised $91M and is backed by Battery
+  Ventures, Foundation Capital, and Aquiline Technology Growth.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://framerusercontent.com/images/YggCBRfzpd8IYRlJTG6UlpdiYQ.png
 url: https://raw.githubusercontent.com/api-evangelist/leeo-insurance-services/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - battery-ventures
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-former-name: Fairmatic
+x-rebrand-date: '2025-12-15'
+x-tier: enriched
+x-tier-reason: documented-rest-api-and-first-party-sdks
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Insurance
+- Insurtech
+- Commercial Auto Insurance
+- Telematics
+- Fleet Management
+- Driving Behavior
+- Risk Management
+- Managing General Agent
+- Mobile SDK
+apis:
+- aid: leeo-insurance-services:leeo-insurance-services-aggregates-api
+  name: LEEO Insurance Services Aggregates API
+  description: Daily and weekly aggregated driver scorecards.
+  humanURL: https://docs.leeoinsurance.com/leeo-apis/
+  baseURL: https://api.leeoinsurance.com/api/v1
+  tags:
+  - Aggregates
+  properties:
+  - type: OpenAPI
+    url: openapi/leeo-insurance-services-aggregates-api-openapi.yml
+  - type: Documentation
+    url: https://docs.leeoinsurance.com/leeo-apis/
+  - type: APIReference
+    url: https://docs.leeoinsurance.com/leeo-apis/
+- aid: leeo-insurance-services:leeo-insurance-services-drivers-api
+  name: LEEO Insurance Services Drivers API
+  description: Fleet driver roster.
+  humanURL: https://docs.leeoinsurance.com/leeo-apis/
+  baseURL: https://api.leeoinsurance.com/api/v1
+  tags:
+  - Drivers
+  properties:
+  - type: OpenAPI
+    url: openapi/leeo-insurance-services-drivers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.leeoinsurance.com/leeo-apis/
+  - type: APIReference
+    url: https://docs.leeoinsurance.com/leeo-apis/
+- aid: leeo-insurance-services:leeo-insurance-services-reports-api
+  name: LEEO Insurance Services Reports API
+  description: Generated fleet report links.
+  humanURL: https://docs.leeoinsurance.com/leeo-apis/
+  baseURL: https://api.leeoinsurance.com/api/v1
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/leeo-insurance-services-reports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.leeoinsurance.com/leeo-apis/
+  - type: APIReference
+    url: https://docs.leeoinsurance.com/leeo-apis/
+- aid: leeo-insurance-services:leeo-insurance-services-trips-api
+  name: LEEO Insurance Services Trips API
+  description: Trip lists, trip detail, paths, and driving events.
+  humanURL: https://docs.leeoinsurance.com/leeo-apis/
+  baseURL: https://api.leeoinsurance.com/api/v1
+  tags:
+  - Trips
+  properties:
+  - type: OpenAPI
+    url: openapi/leeo-insurance-services-trips-api-openapi.yml
+  - type: Documentation
+    url: https://docs.leeoinsurance.com/leeo-apis/
+  - type: APIReference
+    url: https://docs.leeoinsurance.com/leeo-apis/
+common:
+- type: DeveloperPortal
+  url: https://docs.leeoinsurance.com/
+- type: Documentation
+  url: https://docs.leeoinsurance.com/
+- type: APIReference
+  url: https://docs.leeoinsurance.com/leeo-apis/
+- type: GettingStarted
+  url: https://docs.leeoinsurance.com/
+- type: Support
+  url: https://leeoinsurance.com/contact
+- type: Blog
+  url: https://leeoinsurance.com/blog
+- type: GitHubOrganization
+  url: https://github.com/fairmatic
+- type: Login
+  url: https://app.fairmatic.com/login/
+- type: TermsOfService
+  url: https://leeoinsurance.com/terms-of-service
+- type: PrivacyPolicy
+  url: https://leeoinsurance.com/privacy-policy
+- type: Website
+  url: https://leeoinsurance.com/
+- type: Packages
+  url: packages/leeo-insurance-services-packages.yml
+- type: SDKs
+  url: packages/leeo-insurance-services-packages.yml
+- type: Authentication
+  url: authentication/leeo-insurance-services-authentication.yml
+- type: Conventions
+  url: conventions/leeo-insurance-services-conventions.yml
+- type: ErrorCatalog
+  url: errors/leeo-insurance-services-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/leeo-insurance-services-lifecycle.yml
+- type: ChangeLog
+  url: changelog/leeo-insurance-services-changelog.yml
+- type: Conformance
+  url: conformance/leeo-insurance-services-conformance.yml
+- type: DataModel
+  url: data-model/leeo-insurance-services-data-model.yml
+- type: MCPServer
+  url: mcp/leeo-insurance-services-mcp.yml
+- type: LLMsTxt
+  url: llms/leeo-insurance-services-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/leeo-insurance-services-agentic-access.yml
+- type: DomainSecurity
+  url: security/leeo-insurance-services-domain-security.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
