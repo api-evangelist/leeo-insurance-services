@@ -105,6 +105,8 @@ apis:
   - type: APIReference
     url: https://docs.leeoinsurance.com/leeo-apis/
 common:
+- type: Overlay
+  url: overlays/leeo-insurance-services-fleet-overlay.yaml
 - type: DeveloperPortal
   url: https://docs.leeoinsurance.com/
 - type: Documentation
