@@ -1,0 +1,76 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LEEO Fleet Telematics Aggregates API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Aggregates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get daily driver summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leeoinsurance.com/api/v1/driver-aggregate/daily",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "2024-05-20",
+                "type": "query",
+                "description": "Summary date (YYYY-MM-DD). Within the last 6 months; cannot be today."
+              },
+              {
+                "name": "driver_id",
+                "value": "",
+                "type": "query",
+                "description": "Driver id to fetch a summary for. Repeatable — minimum 1, maximum 20."
+              }
+            ]
+          },
+          "docs": "Aggregated daily driving metrics for the specified drivers. Aggregation is performed on UTC dates. `start_date` must be within the last six months and cannot be the current day. Between 1 and 20 `driver_id` values may be supplied."
+        },
+        {
+          "info": {
+            "name": "Get weekly driver summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leeoinsurance.com/api/v1/driver-aggregate/weekly",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "2024-05-20",
+                "type": "query",
+                "description": "Week start date (YYYY-MM-DD). Must be a Monday, within the last 6 months, not today."
+              },
+              {
+                "name": "driver_id",
+                "value": "",
+                "type": "query",
+                "description": "Driver id to fetch a summary for. Repeatable — minimum 1, maximum 20."
+              }
+            ]
+          },
+          "docs": "Aggregated weekly driving metrics for the specified drivers, including a day-by-day breakdown for the days the driver drove. Aggregation is performed on UTC dates. `start_date` must be a Monday, within the last six months, and cannot be the current day. Between 1 and 20 `driver_id` values may be supplied."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LEEO Fleet Telematics Aggregates Reports API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get report link",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leeoinsurance.com/api/v1/report",
+            "params": [
+              {
+                "name": "report_time",
+                "value": "2024-07-01T12:00:00",
+                "type": "query",
+                "description": "Report date-time, format `YYYY-MM-DDTHH:MM:SS`."
+              }
+            ]
+          },
+          "docs": "Retrieves a presigned URL to the generated report for the specified report time. Returns 404 with a message when the report is not yet ready. All dates are UTC."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

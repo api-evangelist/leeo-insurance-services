@@ -1,0 +1,763 @@
+{
+  "item": [
+    {
+      "id": "acefad4a-eda5-4a73-8fb1-70a537eb59dd",
+      "name": "Trips",
+      "description": {
+        "content": "Trip lists, trip detail, paths, and driving events.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "24aa77a3-0026-43a8-9c78-e00af5b84cdb",
+          "name": "Get driver trips",
+          "request": {
+            "name": "Get driver trips",
+            "description": {
+              "content": "Retrieves a paginated list of trips taken by a specified driver from a given start date. Trip data here does not contain the path taken or event details — use the trip detail operations for those. Trips are available approximately four hours after trip completion. `start_date` must fall within the last six months.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "driver",
+                ":driver_id",
+                "trips"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "(Required) Date to fetch trips from (YYYY-MM-DD). Must be within the last 6 months."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Records per page (max 100)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Page number."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "driver_id",
+                  "description": "(Required) Driver identifier. For app integrations, fetch it from the driver list operation; for SDK integrations it is the id supplied at SDK initiation."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fe21f978-b998-4b08-96e3-57dbbe417df4",
+              "name": "Paginated list of trips for the driver.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "driver",
+                    ":driver_id",
+                    "trips"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2024-05-01"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "30"
+                    },
+                    {
+                      "key": "page",
+                      "value": "2"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "driver_id",
+                      "description": "(Required) Driver identifier. For app integrations, fetch it from the driver list operation; for SDK integrations it is the id supplied at SDK initiation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 50,\n  \"current_page\": 2,\n  \"next_page\": null,\n  \"limit\": 30,\n  \"trips\": [\n    {\n      \"trip_id\": \"96a4f7c842f74bfab0962feeae52a21b\",\n      \"driver_id\": \"fe497c39d28b4c50828389730e2292fd\",\n      \"trip_start_time\": 1716432408087,\n      \"trip_end_time\": 1716432708087,\n      \"duration_seconds\": 2259.833,\n      \"distance_miles\": 52.11779602592761,\n      \"insurance_period\": null,\n      \"start_latitude\": 38.04636977126205,\n      \"start_longitude\": -121.39782655062564,\n      \"end_latitude\": 37.76203001834099,\n      \"end_longitude\": -121.4533660947544,\n      \"night_driving_seconds\": 0,\n      \"highway_miles\": 39.90748363242293,\n      \"night_driving_miles\": 0,\n      \"event_summary\": {\n        \"phone_use_count\": 6,\n        \"rapid_acceleration_count\": 3,\n        \"hard_brake_count\": 1,\n        \"overspeeding_count\": 0,\n        \"phone_use_time_seconds\": 491.99,\n        \"overspeeding_time_seconds\": 0\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6d31127-144b-4291-b235-fe84d370bf5e",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "driver",
+                    ":driver_id",
+                    "trips"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2024-05-01"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "30"
+                    },
+                    {
+                      "key": "page",
+                      "value": "2"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "driver_id",
+                      "description": "(Required) Driver identifier. For app integrations, fetch it from the driver list operation; for SDK integrations it is the id supplied at SDK initiation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9fe0a19-bb60-420b-8117-0bf57b164611",
+              "name": "Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "driver",
+                    ":driver_id",
+                    "trips"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2024-05-01"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "30"
+                    },
+                    {
+                      "key": "page",
+                      "value": "2"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "driver_id",
+                      "description": "(Required) Driver identifier. For app integrations, fetch it from the driver list operation; for SDK integrations it is the id supplied at SDK initiation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d3ea9a5b-bdcb-40b1-90cd-ed9b73221949",
+          "name": "Get trip detail by trip id",
+          "request": {
+            "name": "Get trip detail by trip id",
+            "description": {
+              "content": "Comprehensive information about a specific trip, including its trail path and driving events, addressed by the LEEO-generated `trip_id` (available from the trip list operation). Paginated with a fixed limit of 5 records per page.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "trip",
+                "trip_id",
+                ":trip_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Page number (5 records per page)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "trip_id",
+                  "description": "(Required) LEEO-generated trip identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "15a73560-8cb7-4831-85ff-2acf68cb4921",
+              "name": "Trip detail including trail path and events.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trip",
+                    "trip_id",
+                    ":trip_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "trip_id",
+                      "description": "(Required) LEEO-generated trip identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 9448,\n  \"limit\": 314,\n  \"current_page\": 2916,\n  \"next_page\": 1456,\n  \"trips\": [\n    {\n      \"trip_id\": \"string\",\n      \"driver_id\": \"string\",\n      \"trip_start_time\": 8688,\n      \"trip_end_time\": 9474,\n      \"duration_seconds\": 1962.937283090367,\n      \"distance_miles\": 8095.831541562233,\n      \"insurance_period\": 1,\n      \"start_latitude\": 6187.833453757182,\n      \"start_longitude\": 5809.128833311863,\n      \"end_latitude\": 6621.732382452664,\n      \"end_longitude\": 6904.564338816062,\n      \"night_driving_seconds\": 9575.366823183254,\n      \"highway_miles\": 1477.6824027440216,\n      \"night_driving_miles\": 5102.186757511498,\n      \"event_summary\": {\n        \"phone_use_count\": 2542,\n        \"rapid_acceleration_count\": 7496,\n        \"hard_brake_count\": 1065,\n        \"overspeeding_count\": 6427,\n        \"phone_use_time_seconds\": 2329.4738372264846,\n        \"overspeeding_time_seconds\": 2495.9141256803728\n      },\n      \"focus_area\": {\n        \"is_phone_use\": false,\n        \"is_rapid_acceleration\": true,\n        \"is_acceleration\": false,\n        \"is_hard_brake\": true,\n        \"is_overspeeding\": true\n      },\n      \"trail_path\": [\n        {\n          \"timestamp\": 1682,\n          \"latitude\": 5202.371877779785,\n          \"longitude\": 1545.1811123351656,\n          \"course\": 7676.794506687732\n        },\n        {\n          \"timestamp\": 8233,\n          \"latitude\": 4019.8051987889726,\n          \"longitude\": 267.7077129809635,\n          \"course\": 2252.3537803435433\n        }\n      ],\n      \"events\": [\n        {\n          \"event_type\": 9,\n          \"event_name\": \"HARD_BRAKE\",\n          \"event_start_timestamp\": 5303,\n          \"event_end_timestamp\": 9950,\n          \"event_start_latitude\": 8110.556193922258,\n          \"event_start_longitude\": 5594.132260699308,\n          \"event_end_latitude\": 8282.723267615345,\n          \"event_end_longitude\": 5255.658913134349,\n          \"event_data\": {\n            \"user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"speed_limit_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"max_user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"event_type\": 9,\n          \"event_name\": \"HARD_BRAKE\",\n          \"event_start_timestamp\": 6285,\n          \"event_end_timestamp\": 347,\n          \"event_start_latitude\": 8420.802308664875,\n          \"event_start_longitude\": 1015.369714636557,\n          \"event_end_latitude\": 4870.003601235016,\n          \"event_end_longitude\": 3525.591684199719,\n          \"event_data\": {\n            \"user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"speed_limit_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"max_user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ]\n    },\n    {\n      \"trip_id\": \"string\",\n      \"driver_id\": \"string\",\n      \"trip_start_time\": 9590,\n      \"trip_end_time\": 3861,\n      \"duration_seconds\": 7559.387145869775,\n      \"distance_miles\": 1881.265173367478,\n      \"insurance_period\": 1,\n      \"start_latitude\": 3175.4642514711218,\n      \"start_longitude\": 559.2824135889896,\n      \"end_latitude\": 7707.840654094722,\n      \"end_longitude\": 1826.1519231756329,\n      \"night_driving_seconds\": 1768.384055277692,\n      \"highway_miles\": 291.35112609092295,\n      \"night_driving_miles\": 9566.814619875304,\n      \"event_summary\": {\n        \"phone_use_count\": 7245,\n        \"rapid_acceleration_count\": 7938,\n        \"hard_brake_count\": 2853,\n        \"overspeeding_count\": 3859,\n        \"phone_use_time_seconds\": 1688.6150681652546,\n        \"overspeeding_time_seconds\": 2915.1190142465234\n      },\n      \"focus_area\": {\n        \"is_phone_use\": true,\n        \"is_rapid_acceleration\": false,\n        \"is_acceleration\": false,\n        \"is_hard_brake\": true,\n        \"is_overspeeding\": true\n      },\n      \"trail_path\": [\n        {\n          \"timestamp\": 8645,\n          \"latitude\": 2181.5589795352653,\n          \"longitude\": 5976.693493466822,\n          \"course\": 4240.240159898697\n        },\n        {\n          \"timestamp\": 3634,\n          \"latitude\": 7837.534740098201,\n          \"longitude\": 8932.345064939891,\n          \"course\": 1599.063028675478\n        }\n      ],\n      \"events\": [\n        {\n          \"event_type\": 7,\n          \"event_name\": \"RAPID_ACCELERATION\",\n          \"event_start_timestamp\": 4544,\n          \"event_end_timestamp\": 7089,\n          \"event_start_latitude\": 9304.571701027819,\n          \"event_start_longitude\": 2007.0505132975247,\n          \"event_end_latitude\": 112.15721702013349,\n          \"event_end_longitude\": 735.40468771911,\n          \"event_data\": {\n            \"user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"speed_limit_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"max_user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"event_type\": 9,\n          \"event_name\": \"HARD_BRAKE\",\n          \"event_start_timestamp\": 7955,\n          \"event_end_timestamp\": 8080,\n          \"event_start_latitude\": 5109.413942175885,\n          \"event_start_longitude\": 9872.694246193554,\n          \"event_end_latitude\": 3207.91085233194,\n          \"event_end_longitude\": 6719.148643125112,\n          \"event_data\": {\n            \"user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"speed_limit_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"max_user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08c3d469-b71d-4ece-8c7f-787dd8fea89c",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trip",
+                    "trip_id",
+                    ":trip_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "trip_id",
+                      "description": "(Required) LEEO-generated trip identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "494ad65a-bb6c-43aa-aa66-c920a250cb0e",
+              "name": "Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trip",
+                    "trip_id",
+                    ":trip_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "trip_id",
+                      "description": "(Required) LEEO-generated trip identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "194a4ba5-4e05-4c88-a57b-37fa99b58d58",
+          "name": "Get trip detail by tracking id",
+          "request": {
+            "name": "Get trip detail by tracking id",
+            "description": {
+              "content": "Comprehensive information about a specific trip, including its trail path and driving events, addressed by the `tracking_id` set by the caller when the trip was started via the LEEO SDK. Paginated with a fixed limit of 5 records per page.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "trip",
+                "tracking_id",
+                ":tracking_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Page number (5 records per page)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tracking_id",
+                  "description": "(Required) Caller-supplied tracking identifier set when the trip was started via the SDK."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8c351dbb-ca4f-4344-83aa-4f0492bcf952",
+              "name": "Trip detail including trail path and events.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trip",
+                    "tracking_id",
+                    ":tracking_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tracking_id",
+                      "description": "(Required) Caller-supplied tracking identifier set when the trip was started via the SDK."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 9448,\n  \"limit\": 314,\n  \"current_page\": 2916,\n  \"next_page\": 1456,\n  \"trips\": [\n    {\n      \"trip_id\": \"string\",\n      \"driver_id\": \"string\",\n      \"trip_start_time\": 8688,\n      \"trip_end_time\": 9474,\n      \"duration_seconds\": 1962.937283090367,\n      \"distance_miles\": 8095.831541562233,\n      \"insurance_period\": 1,\n      \"start_latitude\": 6187.833453757182,\n      \"start_longitude\": 5809.128833311863,\n      \"end_latitude\": 6621.732382452664,\n      \"end_longitude\": 6904.564338816062,\n      \"night_driving_seconds\": 9575.366823183254,\n      \"highway_miles\": 1477.6824027440216,\n      \"night_driving_miles\": 5102.186757511498,\n      \"event_summary\": {\n        \"phone_use_count\": 2542,\n        \"rapid_acceleration_count\": 7496,\n        \"hard_brake_count\": 1065,\n        \"overspeeding_count\": 6427,\n        \"phone_use_time_seconds\": 2329.4738372264846,\n        \"overspeeding_time_seconds\": 2495.9141256803728\n      },\n      \"focus_area\": {\n        \"is_phone_use\": false,\n        \"is_rapid_acceleration\": true,\n        \"is_acceleration\": false,\n        \"is_hard_brake\": true,\n        \"is_overspeeding\": true\n      },\n      \"trail_path\": [\n        {\n          \"timestamp\": 1682,\n          \"latitude\": 5202.371877779785,\n          \"longitude\": 1545.1811123351656,\n          \"course\": 7676.794506687732\n        },\n        {\n          \"timestamp\": 8233,\n          \"latitude\": 4019.8051987889726,\n          \"longitude\": 267.7077129809635,\n          \"course\": 2252.3537803435433\n        }\n      ],\n      \"events\": [\n        {\n          \"event_type\": 9,\n          \"event_name\": \"HARD_BRAKE\",\n          \"event_start_timestamp\": 5303,\n          \"event_end_timestamp\": 9950,\n          \"event_start_latitude\": 8110.556193922258,\n          \"event_start_longitude\": 5594.132260699308,\n          \"event_end_latitude\": 8282.723267615345,\n          \"event_end_longitude\": 5255.658913134349,\n          \"event_data\": {\n            \"user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"speed_limit_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"max_user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"event_type\": 9,\n          \"event_name\": \"HARD_BRAKE\",\n          \"event_start_timestamp\": 6285,\n          \"event_end_timestamp\": 347,\n          \"event_start_latitude\": 8420.802308664875,\n          \"event_start_longitude\": 1015.369714636557,\n          \"event_end_latitude\": 4870.003601235016,\n          \"event_end_longitude\": 3525.591684199719,\n          \"event_data\": {\n            \"user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"speed_limit_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"max_user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ]\n    },\n    {\n      \"trip_id\": \"string\",\n      \"driver_id\": \"string\",\n      \"trip_start_time\": 9590,\n      \"trip_end_time\": 3861,\n      \"duration_seconds\": 7559.387145869775,\n      \"distance_miles\": 1881.265173367478,\n      \"insurance_period\": 1,\n      \"start_latitude\": 3175.4642514711218,\n      \"start_longitude\": 559.2824135889896,\n      \"end_latitude\": 7707.840654094722,\n      \"end_longitude\": 1826.1519231756329,\n      \"night_driving_seconds\": 1768.384055277692,\n      \"highway_miles\": 291.35112609092295,\n      \"night_driving_miles\": 9566.814619875304,\n      \"event_summary\": {\n        \"phone_use_count\": 7245,\n        \"rapid_acceleration_count\": 7938,\n        \"hard_brake_count\": 2853,\n        \"overspeeding_count\": 3859,\n        \"phone_use_time_seconds\": 1688.6150681652546,\n        \"overspeeding_time_seconds\": 2915.1190142465234\n      },\n      \"focus_area\": {\n        \"is_phone_use\": true,\n        \"is_rapid_acceleration\": false,\n        \"is_acceleration\": false,\n        \"is_hard_brake\": true,\n        \"is_overspeeding\": true\n      },\n      \"trail_path\": [\n        {\n          \"timestamp\": 8645,\n          \"latitude\": 2181.5589795352653,\n          \"longitude\": 5976.693493466822,\n          \"course\": 4240.240159898697\n        },\n        {\n          \"timestamp\": 3634,\n          \"latitude\": 7837.534740098201,\n          \"longitude\": 8932.345064939891,\n          \"course\": 1599.063028675478\n        }\n      ],\n      \"events\": [\n        {\n          \"event_type\": 7,\n          \"event_name\": \"RAPID_ACCELERATION\",\n          \"event_start_timestamp\": 4544,\n          \"event_end_timestamp\": 7089,\n          \"event_start_latitude\": 9304.571701027819,\n          \"event_start_longitude\": 2007.0505132975247,\n          \"event_end_latitude\": 112.15721702013349,\n          \"event_end_longitude\": 735.40468771911,\n          \"event_data\": {\n            \"user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"speed_limit_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"max_user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"event_type\": 9,\n          \"event_name\": \"HARD_BRAKE\",\n          \"event_start_timestamp\": 7955,\n          \"event_end_timestamp\": 8080,\n          \"event_start_latitude\": 5109.413942175885,\n          \"event_start_longitude\": 9872.694246193554,\n          \"event_end_latitude\": 3207.91085233194,\n          \"event_end_longitude\": 6719.148643125112,\n          \"event_data\": {\n            \"user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"speed_limit_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"max_user_speed_mph\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fe189ce-44a3-47ef-8a67-1243c79084d2",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trip",
+                    "tracking_id",
+                    ":tracking_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tracking_id",
+                      "description": "(Required) Caller-supplied tracking identifier set when the trip was started via the SDK."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e4d4459-21a5-4971-96b9-1934b0dd51fe",
+              "name": "Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "trip",
+                    "tracking_id",
+                    ":tracking_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tracking_id",
+                      "description": "(Required) Caller-supplied tracking identifier set when the trip was started via the SDK."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.leeoinsurance.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f9a503ba-6aa5-4fcf-ad0c-e9333f27842a",
+    "name": "LEEO Fleet Telematics Aggregates Trips API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The LEEO APIs expose the telematics data LEEO (formerly Fairmatic) collects for a fleet: the roster of drivers, the trips each driver has taken, detailed trip paths and driving events (phone use, hard braking, rapid acceleration, overspeeding), and daily/weekly aggregate driver scorecards. A report endpoint returns a presigned link to a generated CSV report. All requests are authenticated with a fleet-scoped API key issued from the LEEO dashboard Settings page and presented in the Authorization header as `APIKEY <fm_api_key>`. All dates and epoch timestamps are UTC. Trip data becomes available approximately four hours after a trip completes.\n\nContact Support:\n Name: LEEO Sales\n Email: sales@leeoinsurance.com",
+      "type": "text/plain"
+    }
+  }
+}

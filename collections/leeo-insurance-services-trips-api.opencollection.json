@@ -1,0 +1,113 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LEEO Fleet Telematics Aggregates Trips API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Trips",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get driver trips",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leeoinsurance.com/api/v1/driver/:driver_id/trips",
+            "params": [
+              {
+                "name": "driver_id",
+                "value": "fe497c39d28b4c50828389730e2292fd",
+                "type": "path",
+                "description": "Driver identifier. For app integrations, fetch it from the driver list operation; for SDK integrations it is the id supplied at SDK initiation."
+              },
+              {
+                "name": "start_date",
+                "value": "2024-05-01",
+                "type": "query",
+                "description": "Date to fetch trips from (YYYY-MM-DD). Must be within the last 6 months."
+              },
+              {
+                "name": "limit",
+                "value": "30",
+                "type": "query",
+                "description": "Records per page (max 100)."
+              },
+              {
+                "name": "page",
+                "value": "2",
+                "type": "query",
+                "description": "Page number."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of trips taken by a specified driver from a given start date. Trip data here does not contain the path taken or event details — use the trip detail operations for those. Trips are available approximately four hours after trip completion. `start_date` must fall within the last six months."
+        },
+        {
+          "info": {
+            "name": "Get trip detail by trip id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leeoinsurance.com/api/v1/trip/trip_id/:trip_id",
+            "params": [
+              {
+                "name": "trip_id",
+                "value": "96a4f7c842f74bfab0962feeae52a21b",
+                "type": "path",
+                "description": "LEEO-generated trip identifier."
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number (5 records per page)."
+              }
+            ]
+          },
+          "docs": "Comprehensive information about a specific trip, including its trail path and driving events, addressed by the LEEO-generated `trip_id` (available from the trip list operation). Paginated with a fixed limit of 5 records per page."
+        },
+        {
+          "info": {
+            "name": "Get trip detail by tracking id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leeoinsurance.com/api/v1/trip/tracking_id/:tracking_id",
+            "params": [
+              {
+                "name": "tracking_id",
+                "value": "",
+                "type": "path",
+                "description": "Caller-supplied tracking identifier set when the trip was started via the SDK."
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number (5 records per page)."
+              }
+            ]
+          },
+          "docs": "Comprehensive information about a specific trip, including its trail path and driving events, addressed by the `tracking_id` set by the caller when the trip was started via the LEEO SDK. Paginated with a fixed limit of 5 records per page."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

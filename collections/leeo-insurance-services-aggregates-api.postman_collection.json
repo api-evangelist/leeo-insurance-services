@@ -1,0 +1,465 @@
+{
+  "item": [
+    {
+      "id": "99989861-38a1-449b-a00b-3645f2da7593",
+      "name": "Aggregates",
+      "description": {
+        "content": "Daily and weekly aggregated driver scorecards.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bbae8817-0560-4dd4-80a0-307f3857b1de",
+          "name": "Get daily driver summary",
+          "request": {
+            "name": "Get daily driver summary",
+            "description": {
+              "content": "Aggregated daily driving metrics for the specified drivers. Aggregation is performed on UTC dates. `start_date` must be within the last six months and cannot be the current day. Between 1 and 20 `driver_id` values may be supplied.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "driver-aggregate",
+                "daily"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "(Required) Summary date (YYYY-MM-DD). Within the last 6 months; cannot be today."
+                },
+                {
+                  "disabled": false,
+                  "key": "driver_id",
+                  "value": "<string>",
+                  "description": "(Required) Driver id to fetch a summary for. Repeatable — minimum 1, maximum 20."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "50e6717d-2b0a-4a21-b819-9f049ed8aeed",
+              "name": "Daily aggregate summary per driver.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "driver-aggregate",
+                    "daily"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2024-05-20"
+                    },
+                    {
+                      "key": "driver_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"driver_info\": {\n        \"driver_id\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"email\": \"string\",\n        \"alias\": \"string\",\n        \"first_travel_date\": \"1980-11-29\",\n        \"last_travel_date\": \"1977-09-27\"\n      },\n      \"driving_summary\": {\n        \"fm_score\": 2272.6123454038293,\n        \"fm_grade\": \"string\",\n        \"trip_count\": 2215,\n        \"distance_miles\": 7872.563286483002,\n        \"duration_seconds\": 7794.376460277031,\n        \"night_driving_seconds\": 3110.4726618161494,\n        \"highway_miles\": 2385.126504169911,\n        \"events_summary\": {\n          \"phone_use_count\": 8795,\n          \"rapid_acceleration_count\": 1946,\n          \"hard_brake_count\": 7603,\n          \"overspeeding_count\": 7305,\n          \"phone_use_time_seconds\": 9665.991866963801,\n          \"overspeeding_time_seconds\": 5222.547044668574\n        },\n        \"focus_area\": {\n          \"is_phone_use\": false,\n          \"is_rapid_acceleration\": true,\n          \"is_acceleration\": true,\n          \"is_hard_brake\": true,\n          \"is_overspeeding\": false\n        },\n        \"date\": \"1970-01-08\"\n      }\n    },\n    {\n      \"driver_info\": {\n        \"driver_id\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"email\": \"string\",\n        \"alias\": \"string\",\n        \"first_travel_date\": \"1991-03-02\",\n        \"last_travel_date\": \"1995-12-10\"\n      },\n      \"driving_summary\": {\n        \"fm_score\": 2744.1548042202467,\n        \"fm_grade\": \"string\",\n        \"trip_count\": 6917,\n        \"distance_miles\": 6625.4027487700005,\n        \"duration_seconds\": 7671.84837103755,\n        \"night_driving_seconds\": 1331.9727853640961,\n        \"highway_miles\": 353.210090500935,\n        \"events_summary\": {\n          \"phone_use_count\": 9391,\n          \"rapid_acceleration_count\": 4988,\n          \"hard_brake_count\": 1519,\n          \"overspeeding_count\": 4898,\n          \"phone_use_time_seconds\": 6260.58552691373,\n          \"overspeeding_time_seconds\": 5365.231377104508\n        },\n        \"focus_area\": {\n          \"is_phone_use\": false,\n          \"is_rapid_acceleration\": true,\n          \"is_acceleration\": true,\n          \"is_hard_brake\": true,\n          \"is_overspeeding\": false\n        },\n        \"date\": \"2025-07-03\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a38b0f6e-07d5-40b5-9ca9-297b33c10b0b",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "driver-aggregate",
+                    "daily"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2024-05-20"
+                    },
+                    {
+                      "key": "driver_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f27ffdc-c836-43c3-a315-41f0c8b3d5b1",
+              "name": "Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "driver-aggregate",
+                    "daily"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2024-05-20"
+                    },
+                    {
+                      "key": "driver_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fbf1088d-488d-43f1-9480-175c77c6dadf",
+          "name": "Get weekly driver summary",
+          "request": {
+            "name": "Get weekly driver summary",
+            "description": {
+              "content": "Aggregated weekly driving metrics for the specified drivers, including a day-by-day breakdown for the days the driver drove. Aggregation is performed on UTC dates. `start_date` must be a Monday, within the last six months, and cannot be the current day. Between 1 and 20 `driver_id` values may be supplied.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "driver-aggregate",
+                "weekly"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>",
+                  "description": "(Required) Week start date (YYYY-MM-DD). Must be a Monday, within the last 6 months, not today."
+                },
+                {
+                  "disabled": false,
+                  "key": "driver_id",
+                  "value": "<string>",
+                  "description": "(Required) Driver id to fetch a summary for. Repeatable — minimum 1, maximum 20."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c9e02fdc-18dd-44fa-a8be-7e03fefa8880",
+              "name": "Weekly aggregate summary per driver with daily breakdown.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "driver-aggregate",
+                    "weekly"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2024-05-20"
+                    },
+                    {
+                      "key": "driver_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"driver_info\": {\n        \"driver_id\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"email\": \"string\",\n        \"alias\": \"string\",\n        \"first_travel_date\": \"1994-06-06\",\n        \"last_travel_date\": \"1951-07-30\"\n      },\n      \"driving_summary\": {\n        \"fm_score\": 8923.528444735732,\n        \"fm_grade\": \"string\",\n        \"trip_count\": 6839,\n        \"distance_miles\": 5403.7258798184075,\n        \"duration_seconds\": 3529.8712934803557,\n        \"night_driving_seconds\": 8540.977355082405,\n        \"highway_miles\": 5418.902673641759,\n        \"events_summary\": {\n          \"phone_use_count\": 150,\n          \"rapid_acceleration_count\": 9103,\n          \"hard_brake_count\": 4034,\n          \"overspeeding_count\": 7657,\n          \"phone_use_time_seconds\": 5122.685057564974,\n          \"overspeeding_time_seconds\": 3454.211506850303\n        },\n        \"focus_area\": {\n          \"is_phone_use\": false,\n          \"is_rapid_acceleration\": true,\n          \"is_acceleration\": true,\n          \"is_hard_brake\": false,\n          \"is_overspeeding\": false\n        },\n        \"start_date\": \"1999-10-15\",\n        \"end_date\": \"1999-05-03\",\n        \"daily_summary_breakdown\": [\n          {\n            \"date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    {\n      \"driver_info\": {\n        \"driver_id\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"email\": \"string\",\n        \"alias\": \"string\",\n        \"first_travel_date\": \"1989-09-24\",\n        \"last_travel_date\": \"2025-01-07\"\n      },\n      \"driving_summary\": {\n        \"fm_score\": 7159.833682728479,\n        \"fm_grade\": \"string\",\n        \"trip_count\": 3469,\n        \"distance_miles\": 9534.755999608336,\n        \"duration_seconds\": 8514.526221451439,\n        \"night_driving_seconds\": 6629.1206462886075,\n        \"highway_miles\": 9420.631736148405,\n        \"events_summary\": {\n          \"phone_use_count\": 8998,\n          \"rapid_acceleration_count\": 9153,\n          \"hard_brake_count\": 3431,\n          \"overspeeding_count\": 7115,\n          \"phone_use_time_seconds\": 6242.271657361062,\n          \"overspeeding_time_seconds\": 6077.970603601738\n        },\n        \"focus_area\": {\n          \"is_phone_use\": false,\n          \"is_rapid_acceleration\": true,\n          \"is_acceleration\": true,\n          \"is_hard_brake\": false,\n          \"is_overspeeding\": true\n        },\n        \"start_date\": \"1960-06-19\",\n        \"end_date\": \"1977-03-31\",\n        \"daily_summary_breakdown\": [\n          {\n            \"date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"date\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a710ed2-53ed-489d-9f0e-5a336d3fe27b",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "driver-aggregate",
+                    "weekly"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2024-05-20"
+                    },
+                    {
+                      "key": "driver_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28a84a2e-313c-4ced-963c-a5dfbe90eafe",
+              "name": "Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "driver-aggregate",
+                    "weekly"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "2024-05-20"
+                    },
+                    {
+                      "key": "driver_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.leeoinsurance.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "231b4c25-8c67-41bb-a75e-6db23883ea03",
+    "name": "LEEO Fleet Telematics Aggregates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The LEEO APIs expose the telematics data LEEO (formerly Fairmatic) collects for a fleet: the roster of drivers, the trips each driver has taken, detailed trip paths and driving events (phone use, hard braking, rapid acceleration, overspeeding), and daily/weekly aggregate driver scorecards. A report endpoint returns a presigned link to a generated CSV report. All requests are authenticated with a fleet-scoped API key issued from the LEEO dashboard Settings page and presented in the Authorization header as `APIKEY <fm_api_key>`. All dates and epoch timestamps are UTC. Trip data becomes available approximately four hours after a trip completes.\n\nContact Support:\n Name: LEEO Sales\n Email: sales@leeoinsurance.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LEEO Fleet Telematics Aggregates Drivers API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Drivers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all drivers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.leeoinsurance.com/api/v1/drivers",
+            "params": [
+              {
+                "name": "limit",
+                "value": "30",
+                "type": "query",
+                "description": "Records per page (max 100)."
+              },
+              {
+                "name": "page",
+                "value": "2",
+                "type": "query",
+                "description": "Page number."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of drivers, irrespective of driver status, within a fleet. All dates are UTC. All fields other than `driver_id` can be null."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
