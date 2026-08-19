@@ -33,7 +33,7 @@ x-former-name: Fairmatic
 x-rebrand-date: '2025-12-15'
 x-tier: enriched
 x-tier-reason: documented-rest-api-and-first-party-sdks
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-07-19'
 tags:
