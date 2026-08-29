@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: LEEO Fleet Telematics Aggregates API
   version: v1
@@ -98,19 +98,6 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
-  responses:
-    RateLimited:
-      description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Message'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Message'
   schemas:
     DailyAggregateResponse:
       type: object
@@ -124,22 +111,14 @@ components:
                 $ref: '#/components/schemas/Driver'
               driving_summary:
                 $ref: '#/components/schemas/DailyDrivingSummary'
-    EventSummary:
-      type: object
-      description: Counts and durations of driving events observed on a trip or aggregate window.
-      properties:
-        phone_use_count:
-          type: integer
-        rapid_acceleration_count:
-          type: integer
-        hard_brake_count:
-          type: integer
-        overspeeding_count:
-          type: integer
-        phone_use_time_seconds:
-          type: number
-        overspeeding_time_seconds:
-          type: number
+    DailyDrivingSummary:
+      allOf:
+      - $ref: '#/components/schemas/DrivingSummary'
+      - type: object
+        properties:
+          date:
+            type: string
+            format: date
     WeeklyDrivingSummary:
       allOf:
       - $ref: '#/components/schemas/DrivingSummary'
@@ -156,24 +135,30 @@ components:
             description: Day-by-day breakdown for the days the driver drove in the week.
             items:
               $ref: '#/components/schemas/DailyDrivingSummary'
-    Message:
+    DrivingSummary:
       type: object
-      description: Simple message envelope used for non-2xx responses.
+      description: Aggregated driving metrics and LEEO driving score for a window.
       properties:
-        message:
+        fm_score:
+          type: number
+          description: LEEO/Fairmatic driving score.
+        fm_grade:
           type: string
-    WeeklyAggregateResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              driver_info:
-                $ref: '#/components/schemas/Driver'
-              driving_summary:
-                $ref: '#/components/schemas/WeeklyDrivingSummary'
+          description: Grade band for the score, e.g. excellent, good.
+        trip_count:
+          type: integer
+        distance_miles:
+          type: number
+        duration_seconds:
+          type: number
+        night_driving_seconds:
+          type: number
+        highway_miles:
+          type: number
+        events_summary:
+          $ref: '#/components/schemas/EventSummary'
+        focus_area:
+          $ref: '#/components/schemas/FocusArea'
     FocusArea:
       type: object
       description: Flags marking which behaviors are the driver's coaching focus areas.
@@ -188,6 +173,22 @@ components:
           type: boolean
         is_overspeeding:
           type: boolean
+    EventSummary:
+      type: object
+      description: Counts and durations of driving events observed on a trip or aggregate window.
+      properties:
+        phone_use_count:
+          type: integer
+        rapid_acceleration_count:
+          type: integer
+        hard_brake_count:
+          type: integer
+        overspeeding_count:
+          type: integer
+        phone_use_time_seconds:
+          type: number
+        overspeeding_time_seconds:
+          type: number
     Driver:
       type: object
       description: A driver in the fleet. All fields other than driver_id can be null.
@@ -222,38 +223,37 @@ components:
           format: date
       required:
       - driver_id
-    DrivingSummary:
+    Message:
       type: object
-      description: Aggregated driving metrics and LEEO driving score for a window.
+      description: Simple message envelope used for non-2xx responses.
       properties:
-        fm_score:
-          type: number
-          description: LEEO/Fairmatic driving score.
-        fm_grade:
+        message:
           type: string
-          description: Grade band for the score, e.g. excellent, good.
-        trip_count:
-          type: integer
-        distance_miles:
-          type: number
-        duration_seconds:
-          type: number
-        night_driving_seconds:
-          type: number
-        highway_miles:
-          type: number
-        events_summary:
-          $ref: '#/components/schemas/EventSummary'
-        focus_area:
-          $ref: '#/components/schemas/FocusArea'
-    DailyDrivingSummary:
-      allOf:
-      - $ref: '#/components/schemas/DrivingSummary'
-      - type: object
-        properties:
-          date:
-            type: string
-            format: date
+    WeeklyAggregateResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              driver_info:
+                $ref: '#/components/schemas/Driver'
+              driving_summary:
+                $ref: '#/components/schemas/WeeklyDrivingSummary'
+  responses:
+    RateLimited:
+      description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

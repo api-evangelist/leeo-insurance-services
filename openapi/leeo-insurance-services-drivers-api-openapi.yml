@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: LEEO Fleet Telematics Aggregates Drivers API
   version: v1
@@ -76,19 +76,6 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
-  responses:
-    RateLimited:
-      description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Message'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Message'
   schemas:
     DriverList:
       allOf:
@@ -99,12 +86,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Driver'
-    Message:
-      type: object
-      description: Simple message envelope used for non-2xx responses.
-      properties:
-        message:
-          type: string
     Pagination:
       type: object
       description: Pagination envelope fields returned by list operations.
@@ -123,6 +104,12 @@ components:
           - integer
           - 'null'
           description: Next page number; null on the last page.
+    Message:
+      type: object
+      description: Simple message envelope used for non-2xx responses.
+      properties:
+        message:
+          type: string
     Driver:
       type: object
       description: A driver in the fleet. All fields other than driver_id can be null.
@@ -157,6 +144,19 @@ components:
           format: date
       required:
       - driver_id
+  responses:
+    RateLimited:
+      description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
   securitySchemes:
     apiKeyAuth:
       type: apiKey
