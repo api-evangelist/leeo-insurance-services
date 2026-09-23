@@ -1,10 +1,7 @@
 {
   "provider": "leeo-insurance-services",
   "sources": [
-    "leeo-insurance-services-aggregates-api-openapi.yml",
-    "leeo-insurance-services-drivers-api-openapi.yml",
-    "leeo-insurance-services-reports-api-openapi.yml",
-    "leeo-insurance-services-trips-api-openapi.yml"
+    "_ae-authored/leeo-insurance-services-fleet-openapi.yml"
   ],
   "outputs": [
     "leeo-insurance-services-aggregates-api-openapi.yml",
@@ -16,11 +13,14 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "leeo-insurance-services-aggregates-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "leeo-insurance-services-drivers-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "leeo-insurance-services-reports-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "leeo-insurance-services-trips-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "leeo-insurance-services-fleet-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "leeo-insurance-services-aggregates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "leeo-insurance-services-drivers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "leeo-insurance-services-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "leeo-insurance-services-trips-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,0 +1,27 @@
+# Front Door AI Index — leeo-insurance-services — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: leeo-insurance-services
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: leeoinsurance.com
+  final_host: leeoinsurance.com
+  ownership: own
+  owner: leeo-insurance-services
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 3
+  host_score: 3
+  density: 2.28
+  words: 1317
+  tiers:
+    agentic: 0
+    core: 3
+    model: 0
+  ambiguous: 6
+  top_terms:
+    AI: 3
+    agent: 3
+    intelligence: 3

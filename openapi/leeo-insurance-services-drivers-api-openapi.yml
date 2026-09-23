@@ -1,9 +1,9 @@
 openapi: 3.2.0
 info:
-  title: LEEO Fleet Telematics Aggregates Drivers API
+  title: LEEO Fleet Telematics Drivers API
   version: v1
   summary: Driver, trip, and driving-behavior telematics data for commercial auto fleets insured by LEEO.
-  description: 'The LEEO APIs expose the telematics data LEEO (formerly Fairmatic) collects for a fleet: the roster of drivers, the trips each driver has taken, detailed trip paths and driving events (phone use, hard braking, rapid acceleration, overspeeding), and daily/weekly aggregate driver scorecards. A report endpoint returns a presigned link to a generated CSV report. All requests are authenticated with a fleet-scoped API key issued from the LEEO dashboard Settings page and presented in the Authorization header as `APIKEY <fm_api_key>`. All dates and epoch timestamps are UTC. Trip data becomes available approximately four hours after a trip completes.'
+  description: 'The LEEO APIs expose the telematics data LEEO (formerly Fairmatic) collects for a fleet: the roster of drivers, the trips each driver has taken, detailed trip paths and driving events (phone use, hard braking, rapid acceleration, overspeeding), and daily/weekly aggregate driver scorecards.'
   x-generated: '2026-07-19'
   x-method: generated
   x-source: https://docs.leeoinsurance.com/leeo-apis/
@@ -77,39 +77,6 @@ paths:
           $ref: '#/components/responses/RateLimited'
 components:
   schemas:
-    DriverList:
-      allOf:
-      - $ref: '#/components/schemas/Pagination'
-      - type: object
-        properties:
-          drivers:
-            type: array
-            items:
-              $ref: '#/components/schemas/Driver'
-    Pagination:
-      type: object
-      description: Pagination envelope fields returned by list operations.
-      properties:
-        count:
-          type: integer
-          description: Total count of results.
-        limit:
-          type: integer
-          description: Records per page.
-        current_page:
-          type: integer
-          description: Current page number.
-        next_page:
-          type:
-          - integer
-          - 'null'
-          description: Next page number; null on the last page.
-    Message:
-      type: object
-      description: Simple message envelope used for non-2xx responses.
-      properties:
-        message:
-          type: string
     Driver:
       type: object
       description: A driver in the fleet. All fields other than driver_id can be null.
@@ -144,15 +111,48 @@ components:
           format: date
       required:
       - driver_id
+    Message:
+      type: object
+      description: Simple message envelope used for non-2xx responses.
+      properties:
+        message:
+          type: string
+    DriverList:
+      allOf:
+      - $ref: '#/components/schemas/Pagination'
+      - type: object
+        properties:
+          drivers:
+            type: array
+            items:
+              $ref: '#/components/schemas/Driver'
+    Pagination:
+      type: object
+      description: Pagination envelope fields returned by list operations.
+      properties:
+        count:
+          type: integer
+          description: Total count of results.
+        limit:
+          type: integer
+          description: Records per page.
+        current_page:
+          type: integer
+          description: Current page number.
+        next_page:
+          type:
+          - integer
+          - 'null'
+          description: Next page number; null on the last page.
   responses:
-    RateLimited:
-      description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
+    Unauthorized:
+      description: Missing or invalid API key.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Message'
-    Unauthorized:
-      description: Missing or invalid API key.
+    RateLimited:
+      description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
       content:
         application/json:
           schema:
