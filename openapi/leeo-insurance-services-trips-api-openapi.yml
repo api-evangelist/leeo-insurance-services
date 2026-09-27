@@ -164,6 +164,59 @@ paths:
           $ref: '#/components/responses/RateLimited'
 components:
   schemas:
+    TrailPoint:
+      type: object
+      description: A single point on the trip trail path.
+      properties:
+        timestamp:
+          type: integer
+          description: Epoch milliseconds, UTC.
+        latitude:
+          type: number
+        longitude:
+          type: number
+        course:
+          type: number
+          description: Heading in degrees relative to North.
+    TripDetail:
+      allOf:
+      - $ref: '#/components/schemas/Trip'
+      - type: object
+        properties:
+          focus_area:
+            $ref: '#/components/schemas/FocusArea'
+          trail_path:
+            type: array
+            items:
+              $ref: '#/components/schemas/TrailPoint'
+          events:
+            type: array
+            items:
+              $ref: '#/components/schemas/DrivingEvent'
+    Message:
+      type: object
+      description: Simple message envelope used for non-2xx responses.
+      properties:
+        message:
+          type: string
+    Pagination:
+      type: object
+      description: Pagination envelope fields returned by list operations.
+      properties:
+        count:
+          type: integer
+          description: Total count of results.
+        limit:
+          type: integer
+          description: Records per page.
+        current_page:
+          type: integer
+          description: Current page number.
+        next_page:
+          type:
+          - integer
+          - 'null'
+          description: Next page number; null on the last page.
     DrivingEvent:
       type: object
       description: A driving event detected during the trip.
@@ -205,80 +258,6 @@ components:
               type: number
             max_user_speed_mph:
               type: number
-    FocusArea:
-      type: object
-      description: Flags marking which behaviors are the driver's coaching focus areas.
-      properties:
-        is_phone_use:
-          type: boolean
-        is_rapid_acceleration:
-          type: boolean
-        is_acceleration:
-          type: boolean
-        is_hard_brake:
-          type: boolean
-        is_overspeeding:
-          type: boolean
-    Message:
-      type: object
-      description: Simple message envelope used for non-2xx responses.
-      properties:
-        message:
-          type: string
-    TrailPoint:
-      type: object
-      description: A single point on the trip trail path.
-      properties:
-        timestamp:
-          type: integer
-          description: Epoch milliseconds, UTC.
-        latitude:
-          type: number
-        longitude:
-          type: number
-        course:
-          type: number
-          description: Heading in degrees relative to North.
-    TripDetail:
-      allOf:
-      - $ref: '#/components/schemas/Trip'
-      - type: object
-        properties:
-          focus_area:
-            $ref: '#/components/schemas/FocusArea'
-          trail_path:
-            type: array
-            items:
-              $ref: '#/components/schemas/TrailPoint'
-          events:
-            type: array
-            items:
-              $ref: '#/components/schemas/DrivingEvent'
-    TripDetailList:
-      allOf:
-      - $ref: '#/components/schemas/Pagination'
-      - type: object
-        properties:
-          trips:
-            type: array
-            items:
-              $ref: '#/components/schemas/TripDetail'
-    EventSummary:
-      type: object
-      description: Counts and durations of driving events observed on a trip or aggregate window.
-      properties:
-        phone_use_count:
-          type: integer
-        rapid_acceleration_count:
-          type: integer
-        hard_brake_count:
-          type: integer
-        overspeeding_count:
-          type: integer
-        phone_use_time_seconds:
-          type: number
-        overspeeding_time_seconds:
-          type: number
     TripList:
       allOf:
       - $ref: '#/components/schemas/Pagination'
@@ -332,24 +311,45 @@ components:
           type: number
         event_summary:
           $ref: '#/components/schemas/EventSummary'
-    Pagination:
+    TripDetailList:
+      allOf:
+      - $ref: '#/components/schemas/Pagination'
+      - type: object
+        properties:
+          trips:
+            type: array
+            items:
+              $ref: '#/components/schemas/TripDetail'
+    FocusArea:
       type: object
-      description: Pagination envelope fields returned by list operations.
+      description: Flags marking which behaviors are the driver's coaching focus areas.
       properties:
-        count:
+        is_phone_use:
+          type: boolean
+        is_rapid_acceleration:
+          type: boolean
+        is_acceleration:
+          type: boolean
+        is_hard_brake:
+          type: boolean
+        is_overspeeding:
+          type: boolean
+    EventSummary:
+      type: object
+      description: Counts and durations of driving events observed on a trip or aggregate window.
+      properties:
+        phone_use_count:
           type: integer
-          description: Total count of results.
-        limit:
+        rapid_acceleration_count:
           type: integer
-          description: Records per page.
-        current_page:
+        hard_brake_count:
           type: integer
-          description: Current page number.
-        next_page:
-          type:
-          - integer
-          - 'null'
-          description: Next page number; null on the last page.
+        overspeeding_count:
+          type: integer
+        phone_use_time_seconds:
+          type: number
+        overspeeding_time_seconds:
+          type: number
   responses:
     Unauthorized:
       description: Missing or invalid API key.

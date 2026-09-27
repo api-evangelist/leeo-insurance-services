@@ -133,90 +133,12 @@ components:
           format: date
       required:
       - driver_id
-    FocusArea:
-      type: object
-      description: Flags marking which behaviors are the driver's coaching focus areas.
-      properties:
-        is_phone_use:
-          type: boolean
-        is_rapid_acceleration:
-          type: boolean
-        is_acceleration:
-          type: boolean
-        is_hard_brake:
-          type: boolean
-        is_overspeeding:
-          type: boolean
-    DailyDrivingSummary:
-      allOf:
-      - $ref: '#/components/schemas/DrivingSummary'
-      - type: object
-        properties:
-          date:
-            type: string
-            format: date
     Message:
       type: object
       description: Simple message envelope used for non-2xx responses.
       properties:
         message:
           type: string
-    WeeklyDrivingSummary:
-      allOf:
-      - $ref: '#/components/schemas/DrivingSummary'
-      - type: object
-        properties:
-          start_date:
-            type: string
-            format: date
-          end_date:
-            type: string
-            format: date
-          daily_summary_breakdown:
-            type: array
-            description: Day-by-day breakdown for the days the driver drove in the week.
-            items:
-              $ref: '#/components/schemas/DailyDrivingSummary'
-    EventSummary:
-      type: object
-      description: Counts and durations of driving events observed on a trip or aggregate window.
-      properties:
-        phone_use_count:
-          type: integer
-        rapid_acceleration_count:
-          type: integer
-        hard_brake_count:
-          type: integer
-        overspeeding_count:
-          type: integer
-        phone_use_time_seconds:
-          type: number
-        overspeeding_time_seconds:
-          type: number
-    WeeklyAggregateResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              driver_info:
-                $ref: '#/components/schemas/Driver'
-              driving_summary:
-                $ref: '#/components/schemas/WeeklyDrivingSummary'
-    DailyAggregateResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              driver_info:
-                $ref: '#/components/schemas/Driver'
-              driving_summary:
-                $ref: '#/components/schemas/DailyDrivingSummary'
     DrivingSummary:
       type: object
       description: Aggregated driving metrics and LEEO driving score for a window.
@@ -241,6 +163,84 @@ components:
           $ref: '#/components/schemas/EventSummary'
         focus_area:
           $ref: '#/components/schemas/FocusArea'
+    WeeklyAggregateResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              driver_info:
+                $ref: '#/components/schemas/Driver'
+              driving_summary:
+                $ref: '#/components/schemas/WeeklyDrivingSummary'
+    DailyDrivingSummary:
+      allOf:
+      - $ref: '#/components/schemas/DrivingSummary'
+      - type: object
+        properties:
+          date:
+            type: string
+            format: date
+    WeeklyDrivingSummary:
+      allOf:
+      - $ref: '#/components/schemas/DrivingSummary'
+      - type: object
+        properties:
+          start_date:
+            type: string
+            format: date
+          end_date:
+            type: string
+            format: date
+          daily_summary_breakdown:
+            type: array
+            description: Day-by-day breakdown for the days the driver drove in the week.
+            items:
+              $ref: '#/components/schemas/DailyDrivingSummary'
+    FocusArea:
+      type: object
+      description: Flags marking which behaviors are the driver's coaching focus areas.
+      properties:
+        is_phone_use:
+          type: boolean
+        is_rapid_acceleration:
+          type: boolean
+        is_acceleration:
+          type: boolean
+        is_hard_brake:
+          type: boolean
+        is_overspeeding:
+          type: boolean
+    DailyAggregateResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              driver_info:
+                $ref: '#/components/schemas/Driver'
+              driving_summary:
+                $ref: '#/components/schemas/DailyDrivingSummary'
+    EventSummary:
+      type: object
+      description: Counts and durations of driving events observed on a trip or aggregate window.
+      properties:
+        phone_use_count:
+          type: integer
+        rapid_acceleration_count:
+          type: integer
+        hard_brake_count:
+          type: integer
+        overspeeding_count:
+          type: integer
+        phone_use_time_seconds:
+          type: number
+        overspeeding_time_seconds:
+          type: number
   responses:
     Unauthorized:
       description: Missing or invalid API key.
