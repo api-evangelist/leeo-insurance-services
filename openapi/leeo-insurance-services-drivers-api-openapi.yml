@@ -117,6 +117,15 @@ components:
       properties:
         message:
           type: string
+    DriverList:
+      allOf:
+      - $ref: '#/components/schemas/Pagination'
+      - type: object
+        properties:
+          drivers:
+            type: array
+            items:
+              $ref: '#/components/schemas/Driver'
     Pagination:
       type: object
       description: Pagination envelope fields returned by list operations.
@@ -135,24 +144,15 @@ components:
           - integer
           - 'null'
           description: Next page number; null on the last page.
-    DriverList:
-      allOf:
-      - $ref: '#/components/schemas/Pagination'
-      - type: object
-        properties:
-          drivers:
-            type: array
-            items:
-              $ref: '#/components/schemas/Driver'
   responses:
-    RateLimited:
-      description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
+    Unauthorized:
+      description: Missing or invalid API key.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Message'
-    Unauthorized:
-      description: Missing or invalid API key.
+    RateLimited:
+      description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
       content:
         application/json:
           schema:
