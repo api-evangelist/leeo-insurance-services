@@ -163,7 +163,162 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
+  responses:
+    RateLimited:
+      description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
   schemas:
+    TripDetail:
+      allOf:
+      - $ref: '#/components/schemas/Trip'
+      - type: object
+        properties:
+          focus_area:
+            $ref: '#/components/schemas/FocusArea'
+          trail_path:
+            type: array
+            items:
+              $ref: '#/components/schemas/TrailPoint'
+          events:
+            type: array
+            items:
+              $ref: '#/components/schemas/DrivingEvent'
+    Message:
+      type: object
+      description: Simple message envelope used for non-2xx responses.
+      properties:
+        message:
+          type: string
+    EventSummary:
+      type: object
+      description: Counts and durations of driving events observed on a trip or aggregate window.
+      properties:
+        phone_use_count:
+          type: integer
+        rapid_acceleration_count:
+          type: integer
+        hard_brake_count:
+          type: integer
+        overspeeding_count:
+          type: integer
+        phone_use_time_seconds:
+          type: number
+        overspeeding_time_seconds:
+          type: number
+    TripList:
+      allOf:
+      - $ref: '#/components/schemas/Pagination'
+      - type: object
+        properties:
+          trips:
+            type: array
+            items:
+              $ref: '#/components/schemas/Trip'
+    FocusArea:
+      type: object
+      description: Flags marking which behaviors are the driver's coaching focus areas.
+      properties:
+        is_phone_use:
+          type: boolean
+        is_rapid_acceleration:
+          type: boolean
+        is_acceleration:
+          type: boolean
+        is_hard_brake:
+          type: boolean
+        is_overspeeding:
+          type: boolean
+    TripDetailList:
+      allOf:
+      - $ref: '#/components/schemas/Pagination'
+      - type: object
+        properties:
+          trips:
+            type: array
+            items:
+              $ref: '#/components/schemas/TripDetail'
+    Pagination:
+      type: object
+      description: Pagination envelope fields returned by list operations.
+      properties:
+        count:
+          type: integer
+          description: Total count of results.
+        limit:
+          type: integer
+          description: Records per page.
+        current_page:
+          type: integer
+          description: Current page number.
+        next_page:
+          type:
+          - integer
+          - 'null'
+          description: Next page number; null on the last page.
+    DrivingEvent:
+      type: object
+      description: A driving event detected during the trip.
+      properties:
+        event_type:
+          type: integer
+          description: Numeric event type — 1 RAPID_ACCELERATION, 2 HARD_BRAKE, 7 PHONE_USE, 9 OVERSPEEDING.
+          enum:
+          - 1
+          - 2
+          - 7
+          - 9
+        event_name:
+          type: string
+          enum:
+          - RAPID_ACCELERATION
+          - HARD_BRAKE
+          - PHONE_USE
+          - OVERSPEEDING
+        event_start_timestamp:
+          type: integer
+        event_end_timestamp:
+          type: integer
+        event_start_latitude:
+          type: number
+        event_start_longitude:
+          type: number
+        event_end_latitude:
+          type: number
+        event_end_longitude:
+          type: number
+        event_data:
+          type: object
+          description: Additional event data. Empty for PHONE_USE, HARD_BRAKE and RAPID_ACCELERATION. OVERSPEEDING includes user_speed_mph, speed_limit_mph and max_user_speed_mph.
+          properties:
+            user_speed_mph:
+              type: number
+            speed_limit_mph:
+              type: number
+            max_user_speed_mph:
+              type: number
+    TrailPoint:
+      type: object
+      description: A single point on the trip trail path.
+      properties:
+        timestamp:
+          type: integer
+          description: Epoch milliseconds, UTC.
+        latitude:
+          type: number
+        longitude:
+          type: number
+        course:
+          type: number
+          description: Heading in degrees relative to North.
     Trip:
       type: object
       description: Trip summary without path or event detail.
@@ -208,161 +363,6 @@ components:
           type: number
         event_summary:
           $ref: '#/components/schemas/EventSummary'
-    EventSummary:
-      type: object
-      description: Counts and durations of driving events observed on a trip or aggregate window.
-      properties:
-        phone_use_count:
-          type: integer
-        rapid_acceleration_count:
-          type: integer
-        hard_brake_count:
-          type: integer
-        overspeeding_count:
-          type: integer
-        phone_use_time_seconds:
-          type: number
-        overspeeding_time_seconds:
-          type: number
-    Message:
-      type: object
-      description: Simple message envelope used for non-2xx responses.
-      properties:
-        message:
-          type: string
-    TripDetail:
-      allOf:
-      - $ref: '#/components/schemas/Trip'
-      - type: object
-        properties:
-          focus_area:
-            $ref: '#/components/schemas/FocusArea'
-          trail_path:
-            type: array
-            items:
-              $ref: '#/components/schemas/TrailPoint'
-          events:
-            type: array
-            items:
-              $ref: '#/components/schemas/DrivingEvent'
-    TripList:
-      allOf:
-      - $ref: '#/components/schemas/Pagination'
-      - type: object
-        properties:
-          trips:
-            type: array
-            items:
-              $ref: '#/components/schemas/Trip'
-    TripDetailList:
-      allOf:
-      - $ref: '#/components/schemas/Pagination'
-      - type: object
-        properties:
-          trips:
-            type: array
-            items:
-              $ref: '#/components/schemas/TripDetail'
-    FocusArea:
-      type: object
-      description: Flags marking which behaviors are the driver's coaching focus areas.
-      properties:
-        is_phone_use:
-          type: boolean
-        is_rapid_acceleration:
-          type: boolean
-        is_acceleration:
-          type: boolean
-        is_hard_brake:
-          type: boolean
-        is_overspeeding:
-          type: boolean
-    Pagination:
-      type: object
-      description: Pagination envelope fields returned by list operations.
-      properties:
-        count:
-          type: integer
-          description: Total count of results.
-        limit:
-          type: integer
-          description: Records per page.
-        current_page:
-          type: integer
-          description: Current page number.
-        next_page:
-          type:
-          - integer
-          - 'null'
-          description: Next page number; null on the last page.
-    TrailPoint:
-      type: object
-      description: A single point on the trip trail path.
-      properties:
-        timestamp:
-          type: integer
-          description: Epoch milliseconds, UTC.
-        latitude:
-          type: number
-        longitude:
-          type: number
-        course:
-          type: number
-          description: Heading in degrees relative to North.
-    DrivingEvent:
-      type: object
-      description: A driving event detected during the trip.
-      properties:
-        event_type:
-          type: integer
-          description: Numeric event type — 1 RAPID_ACCELERATION, 2 HARD_BRAKE, 7 PHONE_USE, 9 OVERSPEEDING.
-          enum:
-          - 1
-          - 2
-          - 7
-          - 9
-        event_name:
-          type: string
-          enum:
-          - RAPID_ACCELERATION
-          - HARD_BRAKE
-          - PHONE_USE
-          - OVERSPEEDING
-        event_start_timestamp:
-          type: integer
-        event_end_timestamp:
-          type: integer
-        event_start_latitude:
-          type: number
-        event_start_longitude:
-          type: number
-        event_end_latitude:
-          type: number
-        event_end_longitude:
-          type: number
-        event_data:
-          type: object
-          description: Additional event data. Empty for PHONE_USE, HARD_BRAKE and RAPID_ACCELERATION. OVERSPEEDING includes user_speed_mph, speed_limit_mph and max_user_speed_mph.
-          properties:
-            user_speed_mph:
-              type: number
-            speed_limit_mph:
-              type: number
-            max_user_speed_mph:
-              type: number
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Message'
-    RateLimited:
-      description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Message'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

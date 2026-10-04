@@ -145,14 +145,14 @@ components:
           - 'null'
           description: Next page number; null on the last page.
   responses:
-    Unauthorized:
-      description: Missing or invalid API key.
+    RateLimited:
+      description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Message'
-    RateLimited:
-      description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
+    Unauthorized:
+      description: Missing or invalid API key.
       content:
         application/json:
           schema:

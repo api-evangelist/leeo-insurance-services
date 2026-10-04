@@ -61,6 +61,13 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
+  schemas:
+    Message:
+      type: object
+      description: Simple message envelope used for non-2xx responses.
+      properties:
+        message:
+          type: string
   responses:
     RateLimited:
       description: Rate limit exceeded. All APIs are limited to 5000 requests per minute per fleet, counting all authenticated calls including non-200 responses.
@@ -74,13 +81,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Message'
-  schemas:
-    Message:
-      type: object
-      description: Simple message envelope used for non-2xx responses.
-      properties:
-        message:
-          type: string
   securitySchemes:
     apiKeyAuth:
       type: apiKey
