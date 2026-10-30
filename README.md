@@ -64,67 +64,122 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-LEEO Insurance Services is a San Francisco-based managing general agent (MGA) for commercial auto
-insurance, founded in 2017 and known as **Fairmatic** until its December 2025 rebrand. LEEO
-underwrites and prices fleet policies using telematics collected from drivers' phones through its
-mobile SDK, applying machine learning across underwriting, pricing, and claims, and rewarding safer
-driving with renewal credits and cashback. It writes fleet classes including non-emergency medical
-transport, light business auto, and last-mile delivery, selling through brokers.
+LEEO Insurance Services is a San Francisco-based managing general agent (MGA) for commercial auto insurance, founded in 2017 and known as Fairmatic until its December 2025 rebrand. LEEO underwrites and prices fleet policies using telematics collected from drivers' phones through its mobile SDK, applying machine learning across underwriting, pricing, and claims, and rewarding safer driving with renewal credits and cashback. It writes fleet classes including non-emergency medical transport, light business auto, and last-mile delivery, selling through brokers. LEEO exposes a read-only REST Fleet Telematics API returning the driver roster, trip histories, trip paths and driving events, and daily and weekly driver safety scorecards, plus native SDKs for Android, iOS, React Native, and MAUI. The company has raised $91M and is backed by Battery Ventures, Foundation Capital, and Aquiline Technology Growth.
 
-Backed by: Battery Ventures, Foundation Capital, Aquiline Technology Growth ($91M raised)
+**Areas:** Company · Insurance · Insurtech · Commercial Auto Insurance · Telematics · Fleet Management · Driving Behavior · Risk Management · Managing General Agent · Mobile SDK
 
-## APIs
+## LEEO Insurance Services on APIs.io
 
-**LEEO Fleet Telematics API** — `https://api.leeoinsurance.com/api/v1`
-([docs](https://docs.leeoinsurance.com/leeo-apis/))
+Everything profiled for LEEO Insurance Services is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/leeo-insurance-services/](https://apis.io/providers/leeo-insurance-services/)** — or go straight to one of the APIs or properties below.
 
-A read-only REST API over a fleet's telematics data. Authenticated with a fleet-scoped API key sent
-as `Authorization: APIKEY <fm_api_key>`, rate limited to 5000 requests per minute per fleet. All
-timestamps are UTC; trips become queryable roughly four hours after they complete.
+### APIs (4)
 
-| Operation | Endpoint |
+- [LEEO Insurance Services Aggregates API](https://apis.io/apis/leeo-insurance-services/leeo-insurance-services-aggregates-api/) — Daily and weekly aggregated driver scorecards.
+- [LEEO Insurance Services Drivers API](https://apis.io/apis/leeo-insurance-services/leeo-insurance-services-drivers-api/) — Fleet driver roster.
+- [LEEO Insurance Services Reports API](https://apis.io/apis/leeo-insurance-services/leeo-insurance-services-reports-api/) — Generated fleet report links.
+- [LEEO Insurance Services Trips API](https://apis.io/apis/leeo-insurance-services/leeo-insurance-services-trips-api/) — Trip lists, trip detail, paths, and driving events.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [leeo-insurance-services](https://apis.io/servers/leeo-insurance-services/leeo-insurance-services/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Leeo Insurance Services Agentic Access](https://apis.io/agentic-access/leeo-insurance-services/leeo-insurance-services-agentic-access/)
+
+#### Collections (4)
+
+Postman and Open Collection request collections.
+
+- [LEEO Fleet Telematics Aggregates API](https://apis.io/collections/leeo-insurance-services/open-leeo-insurance-services-aggregates-api/)
+- [LEEO Fleet Telematics Aggregates Drivers API](https://apis.io/collections/leeo-insurance-services/open-leeo-insurance-services-drivers-api/)
+- [LEEO Fleet Telematics Aggregates Reports API](https://apis.io/collections/leeo-insurance-services/open-leeo-insurance-services-reports-api/)
+- [LEEO Fleet Telematics Aggregates Trips API](https://apis.io/collections/leeo-insurance-services/open-leeo-insurance-services-trips-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Leeo Insurance Services Fleet Overlay](https://apis.io/overlays/leeo-insurance-services/leeo-insurance-services-fleet-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Leeo Insurance Services Authentication](https://apis.io/security/leeo-insurance-services/leeo-insurance-services-authentication/)
+- [Leeo Insurance Services Domain Security](https://apis.io/security/leeo-insurance-services/leeo-insurance-services-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://leeoinsurance.com/)
+- [Documentation](https://docs.leeoinsurance.com/)
+- [Getting started](https://docs.leeoinsurance.com/)
+- [API reference](https://docs.leeoinsurance.com/leeo-apis/)
+- [Support](https://leeoinsurance.com/contact)
+- [Blog](https://leeoinsurance.com/blog)
+- [Terms of service](https://leeoinsurance.com/terms-of-service)
+- [Privacy policy](https://leeoinsurance.com/privacy-policy)
+- [GitHub](https://github.com/fairmatic)
+
+## API Evangelist rating
+
+**Kin Score 34.1** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
 |---|---|
-| `listDrivers` | `GET /drivers` |
-| `listDriverTrips` | `GET /driver/{driver_id}/trips` |
-| `getTripByTripId` | `GET /trip/trip_id/{trip_id}` |
-| `getTripByTrackingId` | `GET /trip/tracking_id/{tracking_id}` |
-| `getDailyDriverAggregate` | `GET /driver-aggregate/daily` |
-| `getWeeklyDriverAggregate` | `GET /driver-aggregate/weekly` |
-| `getReportLink` | `GET /report` |
+| Discoverability | 78.6 |
+| Contract quality | 15.2 |
+| Contract governance | 4.5 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 66.1 |
+| Access clarity | 27.6 |
 
-## SDKs
+**Agent readiness 27.7** — agent-aware
 
-First-party mobile telematics SDKs are published under both brands — the mature Fairmatic v3.x line
-and a newer Leeo-branded line:
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-- npm — `react-native-fairmatic-sdk`, `leeo-react-native-sdk`, `leeo-ios-sdk`
-- Maven Central — `com.fairmatic:sdk`
-- NuGet — `FairmaticSDK.Android`, `FairmaticSDK.iOS` (MAUI bindings)
-- CocoaPods — `LeeoSDK`; `FairmaticSDK` via git podspec
-- Swift Package Manager — `fairmatic-sdk-spm`
+**Regulatory alignment 21.9** — Insurance
 
-## Artifacts
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/leeo-insurance-services/](https://apis.io/providers/leeo-insurance-services/).
 
-- `openapi/` — OpenAPI 3.1 spec for the Fleet Telematics API
-- `overlays/` — API Evangelist enhancements over the spec
-- `authentication/` — auth profile
-- `conventions/` — pagination, rate limiting, error envelope, time semantics
-- `errors/` — error catalog
-- `lifecycle/` — versioning, deprecation posture, rebrand history
-- `changelog/` — SDK release inventory
-- `conformance/` — standards conformance
-- `data-model/` — entity-relationship graph
-- `packages/` — SDK and package inventory
-- `mcp/` — candidate MCP tool surface
-- `skills/` — packaged agent skills
-- `llms/` — llms.txt
-- `agentic-access/` — recommended agentic execution contracts
-- `security/` — domain security probe
-- `well-known/` — well-known probe results (none published)
+## How this profile is made
 
-## Notes
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
 
-- LEEO publishes **no** status page, deprecation policy, vulnerability disclosure program, trust
-  center, webhooks or event surface, CLI, sandbox, or public Postman collection. Those artifacts are
-  intentionally absent rather than fabricated.
-- The API surface is entirely read-only (GET), so there is no idempotency contract.
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for LEEO Insurance Services: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/leeo-insurance-services/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
